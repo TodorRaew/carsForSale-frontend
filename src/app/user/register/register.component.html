@@ -1,0 +1,96 @@
+<div class="relative min-h-screen flex ">
+    <div
+        class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white">
+        <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative"
+            style="background-image: url(../../../assets/car-deal.jpg);">
+            <div class="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0"></div>
+            <div class="absolute triangle  min-h-screen right-0 w-16" style=""></div>
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div
+            class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-white ">
+            <div class="max-w-md w-full space-y-8">
+                <div class="text-center">
+                    <h2 class="mt-6 text-3xl font-bold text-gray-900">
+                        Create Your Account
+                    </h2>
+                </div>
+                <form class="mt-8 space-y-6" (ngSubmit)="onSubmitHandler()" [formGroup]="registerForm">
+                    <input type="hidden" name="remember" value="true">
+                    <div class="relative">
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">Email</label>
+                        <input
+                        formControlName="email"
+                            class=" w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-indigo-500"
+                            type="" placeholder="mail@gmail.com">
+                    </div>
+                    <div class="mt-8 content-center">
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
+                            Username
+                        </label>
+                        <input
+                            formControlName="username"
+                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                            type="" placeholder="Enter your username">
+                    </div>
+                    <div class="mt-8 content-center">
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
+                            Password
+                        </label>
+                        <input
+                            formControlName="password"
+                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                            type="" placeholder="Enter your password">
+                    </div>
+
+                    <div class="mt-8 content-center">
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
+                            Re-Password
+                        </label>
+                        <input
+                            formControlName="repassword"
+                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                            type="" placeholder="Enter your password">
+                    </div>
+
+                    <div class="mt-8 content-center">
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
+                            Phone
+                        </label>
+                        <input
+                            formControlName="phoneNumber"
+                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                            type="" placeholder="Enter your phone">
+                    </div>
+
+                    <div class="mt-8 content-center">
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
+                            City
+                        </label>
+                        <input
+                            formControlName="city"
+                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                            type="" placeholder="Enter your city">
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
