@@ -1,0 +1,69 @@
+<div class="px-10 pb-7 flex justify-end">
+    <button [routerLink]="['/login']"
+        class='px-4 py-2 text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]  ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]'>Add
+        Advertisement</button>
+</div>
+
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Write here..." #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8 pt-5">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="sellerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Seller </th>
+            <td mat-cell *matCellDef="let row"> {{row.sellerName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="sellerPhoneNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+            <td mat-cell *matCellDef="let row"> {{row.sellerPhoneNumber}}% </td>
+        </ng-container>
+
+        <ng-container matColumnDef="makeName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Make </th>
+            <td mat-cell *matCellDef="let row"> {{row.makeName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modelName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+            <td mat-cell *matCellDef="let row"> {{row.modelName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fuelType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fuel type </th>
+            <td mat-cell *matCellDef="let row"> {{row.fuelType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="color">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+            <td mat-cell *matCellDef="let row"> {{row.color}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="power">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Power </th>
+            <td mat-cell *matCellDef="let row"> {{row.power}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="yearOfManufacture">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Year of manufacture </th>
+            <td mat-cell *matCellDef="let row"> {{row.yearOfManufacture}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>

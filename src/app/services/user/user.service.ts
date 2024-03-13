@@ -5,6 +5,7 @@ import { User } from 'src/app/shared/interfaces/user';
 import { lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService {
   resourceUrl = `api/v1/auth`
   tokenChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private http: HttpClient, private cookie: CookieService) { }
+  constructor(private http: HttpClient, private cookie: CookieService, private router: Router ){ }
 
   register(form: FormGroup) {
     debugger
@@ -41,11 +42,11 @@ export class UserService {
     if (form.invalid) {
       return;
     }
-    const email = form.value.email;
+    const username = form.value.username;
     const password = form.value.password;
     this.http
       .post<{ token: string }>(`http://localhost:8080/${this.resourceUrl}/login`, {
-        email,
+        username,
         password,
       })
       .subscribe((token) => {
@@ -60,6 +61,8 @@ export class UserService {
 
         this.cookie.set('Authorization', token.token);
         form.reset();
+        this.router.navigate(["/home"])
+
       });
   }
 

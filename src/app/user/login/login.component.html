@@ -29,11 +29,11 @@
                 <form class="mt-8 space-y-6" (ngSubmit)="onLoginHandler()" [formGroup]="loginForm">
                     <input type="hidden" name="remember" value="true">
                     <div class="relative">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">Email</label>
+                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">Username</label>
                         <input
-                        formControlName="email"
+                        formControlName="username"
                             class=" w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-indigo-500"
-                            type="" placeholder="mail@gmail.com">
+                            type="" placeholder="Enter your username">
                     </div>
                 
                     <div class="mt-8 content-center">

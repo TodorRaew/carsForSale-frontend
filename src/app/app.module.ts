@@ -8,12 +8,13 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { CarModule } from './car/car.module';
 import { UserModule } from './user/user.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     AppRoutingModule,
@@ -23,9 +24,9 @@ import { CookieService } from 'ngx-cookie-service';
     SharedModule,
     CarModule,
     UserModule,
-    HttpClientModule,
+    HttpClientModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

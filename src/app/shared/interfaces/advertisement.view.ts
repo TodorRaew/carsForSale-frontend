@@ -8,6 +8,6 @@ export interface AdvertisementView {
     power: string,
     yearOfManufacture: string,
     price: string,
-    dateOfCreation: string,
-    // image: string
+    dateOfCreation: Date,
+    image: string
 }

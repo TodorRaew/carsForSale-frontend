@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class LoginComponent implements OnInit{
 
   loginForm = new FormGroup({
-    email: new FormControl("",[ Validators.email, Validators.required]),
+    username: new FormControl("",[Validators.required]),
     password: new FormControl("",[Validators.required]),
   });
 
@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit{
   onLoginHandler(): void {
     debugger
     this.userService.login(this.loginForm);
-
-    this.router.navigate(["/home"])
   }
 
   onLogout(): void {
