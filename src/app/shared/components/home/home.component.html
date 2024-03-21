@@ -19,7 +19,7 @@
 
         <ng-container matColumnDef="sellerPhoneNumber">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-            <td mat-cell *matCellDef="let row"> {{row.sellerPhoneNumber}}% </td>
+            <td mat-cell *matCellDef="let row"> {{row.sellerPhoneNumber}} </td>
         </ng-container>
 
         <ng-container matColumnDef="makeName">
@@ -55,6 +55,18 @@
         <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
             <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let row">
+                <button class="viewBtn" (click)="openDialog(row.id)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button class="deleteBtn" (click)="onDeleteHandler(row.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

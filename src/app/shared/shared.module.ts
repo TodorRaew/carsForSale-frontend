@@ -9,17 +9,20 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
+import { DioalogComponent } from './components/dialog/dialog.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
-  declarations: [ContactComponent, AboutComponent, HomeComponent],
+  declarations: [ContactComponent, AboutComponent, HomeComponent, DioalogComponent],
   imports: [
     CommonModule, RouterModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSortModule
+    MatSortModule,
+    MatIconModule
   ],
   exports: [ContactComponent, AboutComponent, HomeComponent]
 })

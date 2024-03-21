@@ -18,4 +18,8 @@ export class AdvertisementService {
     debugger
     return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisements`);
   }
+
+  deleteAdvertisement(id: number){
+    return this.http.delete(`${this.URL}/${this.resourceUrl}/advertisements/${id}`);
+  }
 }
