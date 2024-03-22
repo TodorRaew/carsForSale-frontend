@@ -11,10 +11,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { DioalogComponent } from './components/dialog/dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { DialogAnimationsComponent } from './components/dialog-animations/dialog-animations.component';
+import { FormComponent } from './components/form/form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ContactComponent, AboutComponent, HomeComponent, DioalogComponent],
+  declarations: [ContactComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent],
   imports: [
     CommonModule, RouterModule,
     MatTableModule,
@@ -22,7 +25,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
+
   ],
   exports: [ContactComponent, AboutComponent, HomeComponent]
 })

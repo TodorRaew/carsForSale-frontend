@@ -4,6 +4,8 @@ import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DioalogComponent } from '../dialog/dialog.component';
+import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,7 @@ export class HomeComponent implements OnInit {
   advertisements: AdvertisementView[] = [];
   displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
+  static advertisementId: number = 0;
 
   constructor(private advertisementService: AdvertisementService, private _dialog: MatDialog) {
 
@@ -38,19 +41,41 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  openDialog(id: number): void {
+  openDialog(advertisement: AdvertisementView): void {
     debugger
     const dialogRef = this._dialog.open(DioalogComponent, {
-      
+      data: advertisement
     });
-
+    
+    console.log(advertisement);
+    console.log(dialogRef);
+    
   }
 
-  onDeleteHandler(id: number): void {
+  openDeleteDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void{
     debugger
-    this.advertisementService.deleteAdvertisement(id)
-      .subscribe(() => {
-       debugger
-      });
+    this._dialog.open(DialogAnimationsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    HomeComponent.advertisementId = id;
+  }
+
+  addAdvertisement(): void {
+    this._dialog.open(FormComponent, {
+      data: {
+        sellerName: '',
+        sellerPhoneNumber: '',
+        makeName: '',
+        modelName: '',
+        fuelType: '',
+        color: '',
+        power: 0,
+        yearOfManufacture: 0,
+        price: 0,
+        id: 0
+      }
+    });
   }
 }

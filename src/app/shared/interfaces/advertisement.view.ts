@@ -1,4 +1,5 @@
 export interface AdvertisementView {
+    id: number,
     sellerName: string,
     sellerPhoneNumber: string,
     makeName: string,

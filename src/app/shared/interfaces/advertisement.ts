@@ -7,6 +7,6 @@ export interface Advertisement {
     fuelTypeId: number;
     yearOfManufacture: number;
     price: number;
-    dateOfCreation: Date;
+    dateOfCreation: string;
     fileId: number;
 }

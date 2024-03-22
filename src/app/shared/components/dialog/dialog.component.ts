@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { Advertisement } from '../../interfaces/advertisement';
+import { AdvertisementView } from '../../interfaces/advertisement.view';
 
 @Component({
   selector: 'app-dioalog',
@@ -10,10 +10,11 @@ import { Advertisement } from '../../interfaces/advertisement';
 export class DioalogComponent {
 
   constructor(public dialogRef: MatDialogRef<DioalogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Advertisement) { 
+    @Inject(MAT_DIALOG_DATA) public data: AdvertisementView) { 
     }
 
     onNoClick(): void {
+      debugger
       this.dialogRef.close();
     }
 }

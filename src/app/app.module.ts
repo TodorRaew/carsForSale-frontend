@@ -30,7 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HttpClientModule,
     MatButtonModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [CookieService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]

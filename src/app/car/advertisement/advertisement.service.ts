@@ -10,7 +10,7 @@ import { AdvertisementView } from 'src/app/shared/interfaces/advertisement.view'
 })
 export class AdvertisementService {
   URL = 'http://localhost:8080';
-  resourceUrl = `api/v1`
+  resourceUrl = `api/v1`;
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
@@ -20,6 +20,10 @@ export class AdvertisementService {
   }
 
   deleteAdvertisement(id: number){
-    return this.http.delete(`${this.URL}/${this.resourceUrl}/advertisements/${id}`);
+    return this.http.delete(`${this.URL}/${this.resourceUrl}/advertisement/${id}`);
+  }
+
+  getAdvertisement(id: number){
+    return this.http.get<Advertisement>(`${this.URL}/${this.resourceUrl}/advertisement/${id}`);
   }
 }

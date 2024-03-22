@@ -5,3 +5,7 @@ h2 {
 .closeBtn {
     font-weight: bold;
 }
+
+mat-form-field {
+    width: 700px;
+}
