@@ -8,6 +8,7 @@ import { DialogAnimationsComponent } from '../dialog-animations/dialog-animation
 import { FormComponent } from '../form/form.component';
 import { Make } from '../../interfaces/make';
 import { MakeService } from 'src/app/services/make.service';
+import { MakeDto } from '../../interfaces/makeDto';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   static advertisementId: number = 0;
-  makes: Make[] = [];
+  makes: MakeDto[] = [];
 
   constructor(private advertisementService: AdvertisementService, private _dialog: MatDialog, private makeService: MakeService) {
 
@@ -80,13 +81,5 @@ export class HomeComponent implements OnInit {
         id: 0
       }
     });
-
-    debugger
-
-    this.makeService.getAllMakes()
-      .subscribe((makes) => {
-        debugger
-        this.makes = makes;
-      });
   }
 }

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
+import { FuelTypeDto } from '../shared/interfaces/fuelTypeDto';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { MakeDto } from '../shared/interfaces/makeDto';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MakeService {
+export class FuelTypeService {
   URL = 'http://localhost:8080';
-  resourceUrl = `api/v1/auth`
+  resourceUrl = `api/v1`
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
-  getAllMakes() {
+  getAllFuelTypes() {
     debugger
-    return this.http.get<MakeDto[]>(`${this.URL}/make`, {
+    return this.http.get<FuelTypeDto[]>(`${this.URL}/${this.resourceUrl}/fuelTypes`, {
       headers: {Authorization: this.cookie.get('Authorization')}
     })
   }

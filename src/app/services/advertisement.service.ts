@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AdvertisementService {
   URL = 'http://localhost:8080';
-  resourceUrl = `api/v1/auth`
+  resourceUrl = `api/v1`
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -19,9 +19,9 @@ export class AdvertisementService {
     // }
     const sellerName = form.value.sellerName;
     const phoneNumber = form.value.phoneNumber;
-    const makeName = form.value.makeName;
-    const modelName = form.value.modelName;
-    const fuelType = form.value.fuelType;
+    const makeId = Number(form.value.makeId);
+    // const modelName = form.value.modelName;
+    const fuelTypeId =  Number(form.value.fuelTypeId);
     const color = form.value.color;
     const power = form.value.power;
     const yearOfManufacture = form.value.yearOfManufacture;
@@ -32,9 +32,9 @@ export class AdvertisementService {
       .post(`${this.URL}/${this.resourceUrl}/advertisement`, {
         sellerName,
         phoneNumber,
-        makeName,
-        modelName,
-        fuelType,
+        makeId,
+        // modelName,
+        fuelTypeId,
         color,
         power,
         yearOfManufacture,

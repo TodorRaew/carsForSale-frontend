@@ -12,31 +12,17 @@
       <input type="text" id="phoneNumber" formControlName="phoneNumber"
         class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
     </div>
-    <div>
-      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700  mt-6 w-50 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-        </svg>
-        </button>
-        
-        <!-- Dropdown menu -->
-        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-            <ul *ngFor="let make of makes" class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"> {{make.name}} {{make.model.name}}</a>              </li>
-            </ul>
-        </div>
+    <div class="relative">
+      <label>Make and model</label>
+      <select class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900 w-full" formControlName="makeId">
+        <option *ngFor="let make of makes" [value]="make.id">{{ make.name}} {{make.modelName}}</option>
+      </select>
     </div>
-    <!-- <div>
-      <label >Model name</label>
-      <input type="tel" id="modelName"
-      formControlName="modelName"
-      class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900"
-      />
-    </div> -->
     <div>
       <label>Fuel type</label>
-      <input type="text" id="fuelType" formControlName="fuelType"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
+      <select class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900 w-full" formControlName="fuelTypeId">
+        <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.name}}</option>
+      </select>
     </div>
     <div>
       <label>Power (hp)</label>
@@ -50,17 +36,17 @@
     </div>
     <div>
       <label>Year of manufacture</label>
-      <input type="text" id="yearOfManufacture" formControlName="yearOfManufacture"
+      <input type="number" id="yearOfManufacture" formControlName="yearOfManufacture"
         class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
     </div>
     <div>
       <label>Price</label>
-      <input type="text" id="price" formControlName="price"
+      <input type="number" id="price" formControlName="price"
         class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
     </div>
     <div>
       <label>Date of creation</label>
-      <input type="text" id="dateOfCreation" formControlName="dateOfCreation"
+      <input type="number" id="dateOfCreation" formControlName="dateOfCreation"
         class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
     </div>
   </div>
