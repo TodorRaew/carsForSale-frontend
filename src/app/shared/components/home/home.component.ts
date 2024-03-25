@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DioalogComponent } from '../dialog/dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { FormComponent } from '../form/form.component';
+import { Make } from '../../interfaces/make';
+import { MakeService } from 'src/app/services/make.service';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +19,9 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   static advertisementId: number = 0;
+  makes: Make[] = [];
 
-  constructor(private advertisementService: AdvertisementService, private _dialog: MatDialog) {
+  constructor(private advertisementService: AdvertisementService, private _dialog: MatDialog, private makeService: MakeService) {
 
   }
 
@@ -46,13 +49,13 @@ export class HomeComponent implements OnInit {
     const dialogRef = this._dialog.open(DioalogComponent, {
       data: advertisement
     });
-    
+
     console.log(advertisement);
     console.log(dialogRef);
-    
+
   }
 
-  openDeleteDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void{
+  openDeleteDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void {
     debugger
     this._dialog.open(DialogAnimationsComponent, {
       width: '250px',
@@ -77,5 +80,13 @@ export class HomeComponent implements OnInit {
         id: 0
       }
     });
+
+    debugger
+
+    this.makeService.getAllMakes()
+      .subscribe((makes) => {
+        debugger
+        this.makes = makes;
+      });
   }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
+import { Make } from '../../interfaces/make';
+import { MakeService } from 'src/app/services/make.service';
 
 @Component({
   selector: 'app-form',
@@ -9,14 +11,17 @@ import { AdvertisementService } from 'src/app/services/advertisement.service';
 })
 export class FormComponent {
   showForm: boolean = false;
+  selectedValue: string = "";
 
-  constructor(private advertisementService: AdvertisementService) {}
+  makes: Make[] = [];
+
+  constructor(private advertisementService: AdvertisementService, private makeService: MakeService) {}
   
   formData = new FormGroup({
     sellerName: new FormControl("",[Validators.required]),
     phoneNumber: new FormControl("",[Validators.required]),
     makeName: new FormControl("",[Validators.required]),
-    modelName: new FormControl("",[Validators.required]),
+    // modelName: new FormControl("",[Validators.required]),
     fuelType: new FormControl("",[Validators.required]),
     color: new FormControl("",[Validators.required]),
     power: new FormControl("",[Validators.required]),
@@ -26,6 +31,7 @@ export class FormComponent {
   });
 
   openForm() {
+    debugger
     this.showForm = true;
   }
 
@@ -37,5 +43,11 @@ export class FormComponent {
     
     this.advertisementService.addAdvertisement(this.formData);
     this.closeForm();
+  }
+
+  getAllMakes() {
+    debugger
+    this.makeService.getAllMakes();
+    this.makes = this.makeService.makes;
   }
 }

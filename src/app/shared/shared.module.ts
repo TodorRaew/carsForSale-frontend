@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { DialogAnimationsComponent } from './components/dialog-animations/dialog-animations.component';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSelectModule} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -26,8 +29,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatSortModule,
     MatIconModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatSelectModule,
+    FormsModule
   ],
   exports: [ContactComponent, AboutComponent, HomeComponent]
 })
