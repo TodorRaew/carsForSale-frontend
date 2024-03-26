@@ -14,8 +14,9 @@ export class UserService {
   URL = 'http://localhost:8080';
   resourceUrl = `api/v1/auth`
   tokenChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  user: User | undefined;
 
-  constructor(private http: HttpClient, private cookie: CookieService, private router: Router ){ }
+  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
   register(form: FormGroup) {
     debugger
@@ -45,14 +46,14 @@ export class UserService {
     const username = form.value.username;
     const password = form.value.password;
     this.http
-      .post<{ token: string }>(`http://localhost:8080/${this.resourceUrl}/login`, {
+      .post<{ token: string }>(`${this.URL}/${this.resourceUrl}/login`, {
         username,
         password,
       })
       .subscribe((token) => {
         debugger
         console.log(token);
-        
+
         if (token) {
           this.tokenChanged.emit(true);
         } else {
@@ -69,7 +70,7 @@ export class UserService {
   getUserByEmail(form: FormGroup) {
     debugger
     this.http.get<User>(`${this.URL}/user/byEmail`, {
-      headers: {Authorization: this.cookie.get('Authorization')},
+      headers: { Authorization: this.cookie.get('Authorization') },
       params: {
         email: form.value.email
       }
@@ -84,6 +85,34 @@ export class UserService {
           console.log('Invalid email or password');
         }
       });
+  }
+
+  getCurrentUserName() {
+    debugger
+    let token = this.cookie.get('Authorization');
+    if (!token) {
+      return;
+    }
+
+    const username = jwtDecode(token);
+    return username.sub;
+  }
+
+  getCurrentUserByUsername() {
+
+    debugger
+    const username = this.getCurrentUserName() as string;
+    this.http.get<User>(`${this.URL}/user/byUsername`, {
+      headers: { Authorization: this.cookie.get('Authorization') },
+      params: {
+        username: username
+      }
+    })
+      .subscribe((user) => {
+        this.user =  user;
+      });
+
+    return this.user;
   }
 
   async verifyAuthentication() {

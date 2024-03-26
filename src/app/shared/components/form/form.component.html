@@ -4,8 +4,9 @@
   <div class="grid gap-6 mb-6 md:grid-cols-2 w-900 p-2">
     <div>
       <label>Seller name</label>
-      <input type="text" id="sellerName" formControlName="sellerName"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
+      <input type="text" id="sellerId" formControlName="sellerId"
+        class="text-sm rounded-lg h-10 block p-2.5 bg-[#B0B0B0] text-black-900" readonly="readonly"
+        [value]="sellerName">
     </div>
     <div>
       <label>Phone number</label>
@@ -51,7 +52,7 @@
     </div>
   </div>
 
-  <button type="submit"
-    class="text-white m-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit
+  <button type="submit" [routerLink]="['/home']"
+    class="text-white m-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create
   </button>
 </form>

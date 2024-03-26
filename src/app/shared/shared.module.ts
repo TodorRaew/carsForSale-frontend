@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {FormsModule} from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {FormsModule} from '@angular/forms';
     ReactiveFormsModule,
     MatMenuModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ],
   exports: [ContactComponent, AboutComponent, HomeComponent]
 })

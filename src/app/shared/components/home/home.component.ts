@@ -6,8 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DioalogComponent } from '../dialog/dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { FormComponent } from '../form/form.component';
-import { Make } from '../../interfaces/make';
-import { MakeService } from 'src/app/services/make.service';
 import { MakeDto } from '../../interfaces/makeDto';
 
 @Component({
@@ -21,8 +19,11 @@ export class HomeComponent implements OnInit {
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   static advertisementId: number = 0;
   makes: MakeDto[] = [];
+  isAuthenticated: boolean = false;
 
-  constructor(private advertisementService: AdvertisementService, private _dialog: MatDialog, private makeService: MakeService) {
+  constructor(
+    private advertisementService: AdvertisementService,
+    private _dialog: MatDialog) {
 
   }
 
