@@ -18,10 +18,11 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {FormsModule} from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
-  declarations: [ContactComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent],
+  declarations: [ContactComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent, UserComponent],
   imports: [
     CommonModule, RouterModule,
     MatTableModule,

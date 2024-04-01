@@ -6,6 +6,7 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
 import { AuthGuard } from './Auth.guard';
+import { UserComponent } from './shared/components/user/user.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '' },
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'logout',
     component: LoginComponent
+  },
+  {
+    path: 'user',
+    component: UserComponent
   }
 ];
 

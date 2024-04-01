@@ -1,18 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
-import { Make } from '../../interfaces/make';
 import { MakeService } from 'src/app/services/make.service';
 import { MakeDto } from '../../interfaces/makeDto';
 import { FuelTypeDto } from '../../interfaces/fuelTypeDto';
 import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
-import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DioalogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-form',

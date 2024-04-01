@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -8,8 +9,9 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
+  open: boolean = true;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.userService.tokenChanged.subscribe((isAuthenticated: boolean) => {
@@ -20,5 +22,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userService.tokenChanged.unsubscribe();
+  }
+
+  onLogout(): void {
+    debugger
+    this.userService.logout();
+    this.open = false
+  }
+
+  viewUser(): void {
+    debugger
+    this.open = false;
+    this.router.navigate(['/user']);
   }
 }

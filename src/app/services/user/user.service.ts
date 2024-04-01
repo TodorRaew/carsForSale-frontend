@@ -67,8 +67,13 @@ export class UserService {
       });
   }
 
+  logout() {
+    this.cookie.delete('Authorization');
+    this.tokenChanged.emit(false);
+    this.router.navigate(["/login"])
+  }
+
   getUserByEmail(form: FormGroup) {
-    debugger
     this.http.get<User>(`${this.URL}/user/byEmail`, {
       headers: { Authorization: this.cookie.get('Authorization') },
       params: {
@@ -88,7 +93,6 @@ export class UserService {
   }
 
   getCurrentUserName() {
-    debugger
     let token = this.cookie.get('Authorization');
     if (!token) {
       return;
@@ -99,8 +103,6 @@ export class UserService {
   }
 
   getCurrentUserByUsername() {
-
-    debugger
     const username = this.getCurrentUserName() as string;
     this.http.get<User>(`${this.URL}/user/byUsername`, {
       headers: { Authorization: this.cookie.get('Authorization') },
@@ -116,7 +118,6 @@ export class UserService {
   }
 
   async verifyAuthentication() {
-    debugger
     let token = this.cookie.get('Authorization');
     if (!token) {
       return false;

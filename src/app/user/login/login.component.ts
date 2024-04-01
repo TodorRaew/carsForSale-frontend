@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     debugger
-    this.route.snapshot.queryParams['logout'] ? this.onLogout() : null;
   }
 
   onLoginHandler(): void {
@@ -28,9 +27,4 @@ export class LoginComponent implements OnInit{
     this.userService.login(this.loginForm);
   }
 
-  onLogout(): void {
-    debugger
-    this.cookie.delete("Authorization");
-    this.userService.tokenChanged.emit(false);
-  }
 }

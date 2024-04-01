@@ -1,0 +1,98 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+    <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary">
+        <div class="text-lg font-medium">
+            <div class="ng-star-inserted"> Преглед на профил </div>
+        </div>
+    </div>
+    <div class="p-5 overflow-y-auto">
+        <form class="ng-untouched ng-pristine ng-valid">
+            <div class="grid grid-cols-12 gap-x-2 gap-y-1">
+                <mat-form-field
+                    class="mat-mdc-form-field col-span-4 ng-tns-c1205077789-31 ng-star-inserted mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"><!---->
+                    <div class="mat-mdc-text-field-wrapper mdc-text-field ng-tns-c1205077789-31 mdc-text-field--filled">
+                        <div class="mat-mdc-form-field-flex ng-tns-c1205077789-31">
+                            <div class="mat-mdc-form-field-infix ng-tns-c1205077789-31">
+                                <label
+                                    class="mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-31 mdc-floating-label--float-above ng-star-inserted"
+                                    id="mat-mdc-form-field-label-16" for="mat-input-5">
+                                    <mat-label for="username" class="ng-tns-c1205077789-31">Потребителско име</mat-label>
+                                </label>
+                                <input name="username" type="text" formcontrolname="username"
+                                    class="mat-mdc-input-element ng-tns-c1205077789-31 mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                                    id="mat-input-5" required="" disabled [value]="user?.username" aria-invalid="false" aria-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </mat-form-field>
+                <mat-form-field
+                    class="mat-mdc-form-field col-span-4 ng-tns-c1205077789-32 ng-star-inserted mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"><!---->
+                    <div class="mat-mdc-text-field-wrapper mdc-text-field ng-tns-c1205077789-32 mdc-text-field--filled">
+                        <div class="mat-mdc-form-field-flex ng-tns-c1205077789-32">
+                            <div class="mat-mdc-form-field-infix ng-tns-c1205077789-32">
+                                <label
+                                    class="mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-32 mdc-floating-label--float-above ng-star-inserted"
+                                    id="mat-mdc-form-field-label-18" for="mat-input-6">
+                                    <mat-label for="middleName" class="ng-tns-c1205077789-32">Имейл</mat-label>
+                                </label>
+                                <input name="middleName" type="text" formcontrolname="middleName"
+                                    class="mat-mdc-input-element ng-tns-c1205077789-32 mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                                    id="mat-input-6" required="" disabled [value]="user?.email" aria-invalid="false" aria-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </mat-form-field>
+                <mat-form-field
+                    class="mat-mdc-form-field col-span-4 ng-tns-c1205077789-33 ng-star-inserted mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"><!---->
+                    <div class="mat-mdc-text-field-wrapper mdc-text-field ng-tns-c1205077789-33 mdc-text-field--filled">
+                        <div class="mat-mdc-form-field-flex ng-tns-c1205077789-33">
+                            <div class="mat-mdc-form-field-infix ng-tns-c1205077789-33">
+                                <label
+                                    class="mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-33 mdc-floating-label--float-above ng-star-inserted"
+                                    id="mat-mdc-form-field-label-20" for="mat-input-7">
+                                    <mat-label for="lastName" class="ng-tns-c1205077789-33">Телефонен номер</mat-label>
+                                </label>
+                                <input name="phoneNumber" type="text" formcontrolname="phoneNumber"
+                                    class="mat-mdc-input-element ng-tns-c1205077789-33 mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                                    id="mat-input-7" required="" disabled [value]="user?.phoneNumber" aria-invalid="false" aria-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </mat-form-field>
+                <mat-form-field
+                    class="mat-mdc-form-field col-span-6 ng-tns-c1205077789-34 ng-star-inserted mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"><!---->
+                    <div class="mat-mdc-text-field-wrapper mdc-text-field ng-tns-c1205077789-34 mdc-text-field--filled">
+                        <div class="mat-mdc-form-field-flex ng-tns-c1205077789-34">
+                            <div class="mat-mdc-form-field-infix ng-tns-c1205077789-34">
+                                <label
+                                    class="mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-34 mdc-floating-label--float-above ng-star-inserted"
+                                    id="mat-mdc-form-field-label-22" for="mat-input-8">
+                                    <mat-label for="location" class="ng-tns-c1205077789-34">Адрес</mat-label>
+                                </label>
+                                <input name="location" type="text" formcontrolname="location" disabled
+                                    class="mat-mdc-input-element ng-tns-c1205077789-34 mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                                    id="mat-input-8" disabled [value]="user?.location" required="" aria-invalid="false" aria-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </mat-form-field>
+                <mat-form-field
+                    class="mat-mdc-form-field col-span-6 ng-tns-c1205077789-35 ng-star-inserted mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"><!---->
+                    <div class="mat-mdc-text-field-wrapper mdc-text-field ng-tns-c1205077789-35 mdc-text-field--filled">
+                        <div class="mat-mdc-form-field-flex ng-tns-c1205077789-35">
+                            <div class="mat-mdc-form-field-infix ng-tns-c1205077789-35">
+                                <label
+                                    class="mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-35 mdc-floating-label--float-above ng-star-inserted"
+                                    id="mat-mdc-form-field-label-24" for="mat-input-9">
+                                    <mat-label for="role" class="ng-tns-c1205077789-35">Роля</mat-label>
+                                </label>
+                                <input name="role" type="text" formcontrolname="role"
+                                    class="mat-mdc-input-element ng-tns-c1205077789-35 mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                                    id="mat-input-9" required="" disabled [value]="user?.role" aria-invalid="false" aria-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+</div>
