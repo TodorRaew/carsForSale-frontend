@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   viewUser(): void {
     debugger
-    this.open = false;
     this.router.navigate(['/user']);
+    this.open = false;
   }
 }

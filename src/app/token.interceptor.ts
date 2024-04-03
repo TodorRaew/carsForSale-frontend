@@ -15,6 +15,8 @@ export class TokenInterceptor implements HttpInterceptor {
  
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     debugger
+
+    request.url.includes('login') ? this._cookieService.delete('Authorization') : null;
     const token = this._cookieService.get('Authorization');
  
     if (token) {

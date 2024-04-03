@@ -1,58 +1,65 @@
-<h1 class="pt-2 pl-2">Advertisement</h1>
+<h1 class="pl-5 pr-5 pt-5" mat-dialog-title>Advertisement</h1>
+<div class="flex justify-center items-center">
+  <form [formGroup]="formData" (ngSubmit)="submitForm()" class="bg-white shadow-md rounded px-5 pt-6 pb-8 mb-4">
 
-<form [formGroup]="formData" (ngSubmit)="submitForm()">
-  <div class="grid gap-6 mb-6 md:grid-cols-2 w-900 p-2">
-    <div>
-      <label>Seller name</label>
-      <input type="text" id="sellerId" formControlName="sellerId"
-        class="text-sm rounded-lg h-10 block p-2.5 bg-[#B0B0B0] text-black-900" readonly="readonly"
-        [value]="sellerName">
-    </div>
-    <div>
-      <label>Phone number</label>
-      <input type="text" id="phoneNumber" formControlName="phoneNumber"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
-    </div>
-    <div class="relative">
-      <label>Make and model</label>
-      <select class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900 w-full" formControlName="makeId">
-        <option *ngFor="let make of makes" [value]="make.id">{{ make.name}} {{make.modelName}}</option>
-      </select>
-    </div>
-    <div>
-      <label>Fuel type</label>
-      <select class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900 w-full" formControlName="fuelTypeId">
-        <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.name}}</option>
-      </select>
-    </div>
-    <div>
-      <label>Power (hp)</label>
-      <input type="number" id="power" formControlName="power"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
-    </div>
-    <div>
-      <label>Color</label>
-      <input type="text" id="color" formControlName="color"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
-    </div>
-    <div>
-      <label>Year of manufacture</label>
-      <input type="number" id="yearOfManufacture" formControlName="yearOfManufacture"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
-    </div>
-    <div>
-      <label>Price</label>
-      <input type="number" id="price" formControlName="price"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
-    </div>
-    <div>
-      <label>Date of creation</label>
-      <input type="number" id="dateOfCreation" formControlName="dateOfCreation"
-        class="text-sm rounded-lg block p-2.5 bg-[#B0B0B0] text-black-900" required />
-    </div>
-  </div>
+    <div class="grid grid-cols-2 gap-2">
+      <mat-form-field class="p-1">
+        <mat-label>Seller name</mat-label>
+        <input matInput type="text" formControlName="sellerName"
+          class="text-sm rounded-lg h-10 block p-2.5 bg-[#B0B0B0] text-black-900">
+      </mat-form-field>
 
-  <button type="submit" [routerLink]="['/home']"
-    class="text-white m-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create
-  </button>
-</form>
+      <mat-form-field class="p-1">
+        <mat-label>Phone number</mat-label>
+        <input matInput class="w-full" formControlName="phoneNumber">
+      </mat-form-field>
+
+
+
+      <mat-form-field class="p-1">
+        <mat-label>Make and model</mat-label>
+        <mat-select class="w-full" formControlName="makeId">
+          <mat-option *ngFor="let make of makes" [value]="make.id">{{ make.name}} {{make.modelName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-1">
+        <mat-label>Fuel type</mat-label>
+        <mat-select class="w-full" formControlName="fuelTypeId">
+          <mat-option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="p-1">
+        <mat-label>Power (hp)</mat-label>
+        <input matInput class="w-full" formControlName="power">
+      </mat-form-field>
+
+      <mat-form-field class="p-1">
+        <mat-label>Color</mat-label>
+        <input matInput class="w-full" formControlName="color">
+      </mat-form-field>
+
+      <mat-form-field class="p-1">
+        <mat-label>Year of manufacture</mat-label>
+        <input matInput class="w-full" formControlName="yearOfManufacture">
+      </mat-form-field>
+
+      <mat-form-field class="p-1">
+        <mat-label>Price</mat-label>
+        <input matInput class="w-full" formControlName="price">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Date of creation</mat-label>
+        <input matInput class="w-full" formControlName="dateOfCreation">
+      </mat-form-field>
+    </div>
+    <div>
+      <button type="submit" [routerLink]="['/home']" mat-button
+        class='m-5 px-4 py-2 text-sm rounded-full font-bold text-white bg-[#007bff] transition-all ease-in-out duration-300'>Create
+      </button>
+    </div>
+  </form>
+</div>

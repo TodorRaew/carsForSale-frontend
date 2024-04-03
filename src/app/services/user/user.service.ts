@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { User } from 'src/app/shared/interfaces/user';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -38,33 +38,10 @@ export class UserService {
       });
   }
 
-  login(form: FormGroup) {
+  login(form: { username: string, password: string }): Observable<{ token: string, username: string, role: string }> {
     debugger
-    if (form.invalid) {
-      return;
-    }
-    const username = form.value.username;
-    const password = form.value.password;
-    this.http
-      .post<{ token: string }>(`${this.URL}/${this.resourceUrl}/login`, {
-        username,
-        password,
-      })
-      .subscribe((token) => {
-        debugger
-        console.log(token);
-
-        if (token) {
-          this.tokenChanged.emit(true);
-        } else {
-          this.tokenChanged.emit(false);
-        }
-
-        this.cookie.set('Authorization', token.token);
-        form.reset();
-        this.router.navigate(["/home"])
-
-      });
+    return this.http
+      .post<{ token: string, username: string, role: string }>(`${this.URL}/${this.resourceUrl}/login`, form);
   }
 
   logout() {
@@ -111,7 +88,7 @@ export class UserService {
       }
     })
       .subscribe((user) => {
-        this.user =  user;
+        this.user = user;
       });
 
     return this.user;

@@ -22,7 +22,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   makes: MakeDto[] = []
   fuelTypes: FuelTypeDto[] = [];
-  sellerName?: string | boolean | undefined = "";
   sellerId: number | undefined = 0;
 
 
@@ -37,7 +36,7 @@ export class FormComponent implements OnInit, OnDestroy {
     public dialog: MatDialog) { }
 
   formData = new FormGroup({
-    sellerName: new FormControl("", [Validators.required]),
+    sellerName: new FormControl({value: this.userService.getCurrentUserName(), disabled: true},  [Validators.required]),
     phoneNumber: new FormControl("", [Validators.required]),
     makeId: new FormControl("", [Validators.required]),
     fuelTypeId: new FormControl("", [Validators.required]),
@@ -64,7 +63,6 @@ export class FormComponent implements OnInit, OnDestroy {
       });
 
     debugger
-    this.sellerName = this.userService.getCurrentUserName();
     this.sellerId = this.userService.getCurrentUserByUsername()?.id;
   }
 
