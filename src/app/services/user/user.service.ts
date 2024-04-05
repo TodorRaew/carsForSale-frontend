@@ -1,11 +1,12 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { User } from 'src/app/shared/interfaces/user';
-import { Observable, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { UserOutView } from 'src/app/shared/interfaces/userOutView';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ import { Router } from '@angular/router';
 export class UserService {
   URL = 'http://localhost:8080';
   resourceUrl = `api/v1/auth`
-  tokenChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  tokenChanged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  profileOpened: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   user: User | undefined;
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
@@ -38,7 +41,7 @@ export class UserService {
       });
   }
 
-  login(form: { username: string, password: string }): Observable<{ token: string, username: string, role: string }> {
+  login(form: UserOutView): Observable<UserOutView> {
     debugger
     return this.http
       .post<{ token: string, username: string, role: string }>(`${this.URL}/${this.resourceUrl}/login`, form);
@@ -46,7 +49,7 @@ export class UserService {
 
   logout() {
     this.cookie.delete('Authorization');
-    this.tokenChanged.emit(false);
+    this.tokenChanged.next(false);
     this.router.navigate(["/login"])
   }
 
@@ -70,6 +73,7 @@ export class UserService {
   }
 
   getCurrentUserName() {
+    debugger
     let token = this.cookie.get('Authorization');
     if (!token) {
       return;
@@ -79,19 +83,15 @@ export class UserService {
     return username.sub;
   }
 
-  getCurrentUserByUsername() {
+  getCurrentUserByUsername(): Observable<User> {
+    debugger
     const username = this.getCurrentUserName() as string;
-    this.http.get<User>(`${this.URL}/user/byUsername`, {
+    return this.http.get<User>(`${this.URL}/user/byUsername`, {
       headers: { Authorization: this.cookie.get('Authorization') },
       params: {
         username: username
       }
     })
-      .subscribe((user) => {
-        this.user = user;
-      });
-
-    return this.user;
   }
 
   async verifyAuthentication() {

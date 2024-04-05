@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Actions } from '../../interfaces/enums';
 
 @Component({
   selector: 'app-dioalog',
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./dialog.component.css'],
 })
 export class DioalogComponent implements OnInit {
-
+  title: string = 'View Advertisement';
   visibilityDialogFormGroup = new FormGroup({
     sellerName: new FormControl({ value: '', disabled: true },[]),
     phone: new FormControl({ value: '', disabled: true },[]),
@@ -23,20 +24,26 @@ export class DioalogComponent implements OnInit {
   });
 
   constructor(public dialogRef: MatDialogRef<DioalogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AdvertisementView) { 
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
     }
 
     ngOnInit(): void {
+      if(this.data.action === Actions.EDIT){
+        this.title = 'Edit Advertisement'
+        this.visibilityDialogFormGroup.enable();  
+        this.visibilityDialogFormGroup.controls.sellerName.disable();
+        
+      }
       this.visibilityDialogFormGroup.setValue({
-        sellerName: this.data.sellerName,
-        phone: this.data.sellerPhoneNumber,
-        makeName: this.data.makeName,
-        modelName: this.data.modelName,
-        fuelTypeName: this.data.fuelType,
-        color: this.data.color,
-        power: this.data.power,
-        yearOfManufacture: this.data.yearOfManufacture,
-        price: this.data.price,
+        sellerName: this.data.advertisement.sellerName,
+        phone: this.data.advertisement.sellerPhoneNumber,
+        makeName: this.data.advertisement.makeName,
+        modelName: this.data.advertisement.modelName,
+        fuelTypeName: this.data.advertisement.fuelType,
+        color: this.data.advertisement.color,
+        power: this.data.advertisement.power,
+        yearOfManufacture: this.data.advertisement.yearOfManufacture,
+        price: this.data.advertisement.price,
       });
     }
 

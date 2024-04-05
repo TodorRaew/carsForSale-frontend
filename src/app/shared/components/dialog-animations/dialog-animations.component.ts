@@ -1,9 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { DioalogComponent } from '../dialog/dialog.component';
-import { AdvertisementService } from 'src/app/car/advertisement/advertisement.service';
-import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-dialog-animations',
@@ -11,8 +9,11 @@ import { HomeComponent } from '../home/home.component';
   styleUrls: ['./dialog-animations.component.css'],
 })
 export class DialogAnimationsComponent {
+
+  @Output() deleteConfirmed: EventEmitter<void> = new EventEmitter<void>();
+  
   constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<DioalogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AdvertisementView, private advertisementService: AdvertisementService) { }
+    @Inject(MAT_DIALOG_DATA) public data: AdvertisementView) { }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogAnimationsComponent, {
@@ -21,19 +22,12 @@ export class DialogAnimationsComponent {
     });
   }
 
-  onNoClick(): void {
-    debugger
+  onClick(): void {
     this.dialogRef.close();
   }
 
-  onDeleteClick(): void {
-    debugger
-    this.advertisementService.deleteAdvertisement(HomeComponent.advertisementId)
-      .subscribe(() => {
-        this.dialogRef.close();
-      });
-
-      // refresh the page
-      window.location.reload();
+  confirmDelete() {
+    this.deleteConfirmed.emit();
+    this.onClick();
   }
 }

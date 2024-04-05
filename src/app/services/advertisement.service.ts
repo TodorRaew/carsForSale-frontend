@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from './user/user.service';
+import { AdvertisementView } from '../shared/interfaces/advertisement.view';
+import { Advertisement } from '../shared/interfaces/advertisement';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +17,12 @@ export class AdvertisementService {
 
   constructor(private http: HttpClient, private cookie: CookieService, private userService: UserService) { }
 
-  addAdvertisement(form: FormGroup) {
+  addAdvertisement(sellerId: number, form: FormGroup): Observable<Advertisement> {
     debugger
     // if (form.invalid) {
     //   return;
     // }
-    const userId = Number(this.userService.user?.id);
+    const userId = Number(sellerId);
     const phoneNumber = form.value.phoneNumber;
     const makeId = Number(form.value.makeId);
     const fuelTypeId =  Number(form.value.fuelTypeId);
@@ -29,9 +32,10 @@ export class AdvertisementService {
     const price = form.value.price;
     const dateOfCreation = form.value.dateOfCreation;
     debugger
-    this.http
-      .post(`${this.URL}/${this.resourceUrl}/advertisement`, {
-        userId: userId,
+
+    return this.http
+      .post<Advertisement>(`${this.URL}/${this.resourceUrl}/advertisement`, {
+        userId,
         phoneNumber,
         makeId,
         fuelTypeId,
@@ -41,7 +45,18 @@ export class AdvertisementService {
         price,
         dateOfCreation
       })
-      .subscribe(() => {
-      });
+  }
+
+  getAllAdvertisements(){
+    debugger
+    return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisements`);
+  }
+
+  deleteAdvertisement(id: number){
+    return this.http.delete(`${this.URL}/${this.resourceUrl}/advertisement/${id}`);
+  }
+
+  getAdvertisement(id: number){
+    return this.http.get<Advertisement>(`${this.URL}/${this.resourceUrl}/advertisement/${id}`);
   }
 }

@@ -14,9 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { DialogAnimationsComponent } from './components/dialog-animations/dialog-animations.component';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSelectModule} from '@angular/material/select';
-import {FormsModule} from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserComponent } from './components/user/user.component';
 

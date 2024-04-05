@@ -13,11 +13,11 @@
             </div>
             <div *ngIf="isAuthenticated" class="butonsContainer mr-10">
                 <div class="profileContainer py-5">
-                    <button (click)="open = !open">
+                    <button (click)="profileOpened = !profileOpened">
                         <mat-icon>account_circle</mat-icon>
                     </button>
                 </div>
-                <div *ngIf="!open" class="mr-5">
+                <div *ngIf="!profileOpened" class="mr-5">
                     <div class="absolute justify-start mr-5 px-2 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
                         <ul class="space-y-3 dark:text-white">
                           <li class="font-medium">

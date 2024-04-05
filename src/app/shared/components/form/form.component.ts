@@ -5,7 +5,6 @@ import { MakeService } from 'src/app/services/make.service';
 import { MakeDto } from '../../interfaces/makeDto';
 import { FuelTypeDto } from '../../interfaces/fuelTypeDto';
 import { FuelTypeService } from 'src/app/services/fuel-type.service';
-import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,13 +21,12 @@ export class FormComponent implements OnInit, OnDestroy {
 
   makes: MakeDto[] = []
   fuelTypes: FuelTypeDto[] = [];
-  sellerId: number | undefined = 0;
+  sellerId: number = 0;
 
 
   constructor(private advertisementService: AdvertisementService,
     private makeService: MakeService,
     private fuelTypeService: FuelTypeService,
-    private cookie: CookieService,
     private userService: UserService,
     private router: Router,
     private _snackBar: MatSnackBar,
@@ -44,7 +42,6 @@ export class FormComponent implements OnInit, OnDestroy {
     power: new FormControl("", [Validators.required]),
     yearOfManufacture: new FormControl("", [Validators.required]),
     price: new FormControl("", [Validators.required]),
-    dateOfCreation: new FormControl("", [Validators.required]),
   });
 
   ngOnInit() {
@@ -63,15 +60,21 @@ export class FormComponent implements OnInit, OnDestroy {
       });
 
     debugger
-    this.sellerId = this.userService.getCurrentUserByUsername()?.id;
+    this.userService.getCurrentUserByUsername().subscribe((user) => {
+      this.sellerId = user.id
+    });
   }
 
   submitForm() {
     debugger
-    this.advertisementService.addAdvertisement(this.formData);
+    this.advertisementService.addAdvertisement(this.sellerId, this.formData)
+    .subscribe(() => {
+      
+    });
     debugger
     this.openSnackBar("Advertisement added successfully!", "Close");
     this.dialogRef.close();
+    this.router.navigate(['/home'])
   }
 
   openSnackBar(message: string, action: string) {

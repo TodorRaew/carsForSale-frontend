@@ -1,7 +1,6 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -11,7 +10,6 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-  tokenChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   loginForm: FormGroup = new FormGroup({});
 
   constructor(private userService: UserService, private router: Router, private cookie: CookieService, private route: ActivatedRoute) { }
@@ -25,19 +23,17 @@ export class LoginComponent implements OnInit{
   }
 
   onLoginHandler(): void {
-    debugger
     if (this.loginForm.invalid) {
       return;
     }
     this.userService.login(this.loginForm.value)
     .subscribe((token) => {
       debugger
-      console.log(token);
 
       if (token) {
-        this.tokenChanged.emit(true);
+        this.userService.tokenChanged.next(true);
       } else {
-        this.tokenChanged.emit(false);
+        this.userService.tokenChanged.next(false);
       }
 
       // const decodedToken = jwtDecode(token.token);

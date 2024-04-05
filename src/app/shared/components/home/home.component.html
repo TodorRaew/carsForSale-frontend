@@ -66,6 +66,9 @@
                     <button class="viewBtn" (click)="openDialog(row)">
                         <mat-icon>visibility</mat-icon>
                     </button>
+                    <button class="editBtn" (click)="onEditAdvertisementHandler(row)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
                     <button class="deleteBtn" mat-raised-button (click)="openDeleteDialog(row.id, '0ms', '0ms')">
                         <mat-icon>delete</mat-icon>
                     </button>
@@ -81,5 +84,5 @@
         </tr>
     </table>
 
-    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of advertisements"></mat-paginator> -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of advertisements"></mat-paginator>
 </div>

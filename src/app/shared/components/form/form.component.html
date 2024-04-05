@@ -14,8 +14,6 @@
         <input matInput class="w-full" formControlName="phoneNumber">
       </mat-form-field>
 
-
-
       <mat-form-field class="p-1">
         <mat-label>Make and model</mat-label>
         <mat-select class="w-full" formControlName="makeId">
@@ -29,7 +27,6 @@
           <mat-option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-
 
       <mat-form-field class="p-1">
         <mat-label>Power (hp)</mat-label>
@@ -49,11 +46,6 @@
       <mat-form-field class="p-1">
         <mat-label>Price</mat-label>
         <input matInput class="w-full" formControlName="price">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Date of creation</mat-label>
-        <input matInput class="w-full" formControlName="dateOfCreation">
       </mat-form-field>
     </div>
     <div>

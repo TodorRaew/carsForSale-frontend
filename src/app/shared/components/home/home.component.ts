@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdvertisementService } from 'src/app/car/advertisement/advertisement.service';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +6,9 @@ import { DioalogComponent } from '../dialog/dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { FormComponent } from '../form/form.component';
 import { MakeDto } from '../../interfaces/makeDto';
+import { AdvertisementService } from 'src/app/services/advertisement.service';
+import { Actions } from '../../interfaces/enums';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +23,21 @@ export class HomeComponent implements OnInit {
   makes: MakeDto[] = [];
   isAuthenticated: boolean = false;
 
+
   constructor(
     private advertisementService: AdvertisementService,
-    private _dialog: MatDialog) {
+    private _dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+  ) {
 
   }
 
   ngOnInit(): void {
     debugger
+    this.refresh();
+  }
+
+  private refresh() {
     this.advertisementService.getAllAdvertisements()
       .subscribe((advertisements) => {
         debugger
@@ -46,40 +55,62 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  openDialog(advertisement: AdvertisementView): void {
+  openDialog(advertisement: AdvertisementView) {
     debugger
-    const dialogRef = this._dialog.open(DioalogComponent, {
-      data: advertisement
+    this._dialog.open(DioalogComponent, {
+      data: {
+        advertisement: advertisement,
+        action: Actions.VIEW
+      }
     });
-
-    console.log(advertisement);
-    console.log(dialogRef);
-
   }
 
   openDeleteDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void {
-    debugger
-    this._dialog.open(DialogAnimationsComponent, {
+    const dialog = this._dialog.open(DialogAnimationsComponent, {
       width: '250px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { advertisementId: id }
     });
-    HomeComponent.advertisementId = id;
+
+    dialog.componentInstance.deleteConfirmed.subscribe(() => {
+      this.deleteAdvertisement(id);
+    });
+
+    dialog.afterClosed().subscribe(() => {
+      this.refresh();
+    })
+  }
+
+  deleteAdvertisement(id: number) {
+    this.advertisementService.deleteAdvertisement(id)
+      .subscribe(() => {
+        this.openSnackBar('Advertisement deleted successfully', 'Close');
+      }, (error) => {
+        this.openSnackBar('Error deleting advertisement', 'Close');
+      });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 
   addAdvertisement(): void {
-    this._dialog.open(FormComponent, {
+    const dialog = this._dialog.open(FormComponent, {});
+
+    dialog.afterClosed().subscribe(() => {
+      this.refresh();
+    })
+  }
+
+  onEditAdvertisementHandler(advertisement: AdvertisementView) {
+    debugger
+    this._dialog.open(DioalogComponent, {
       data: {
-        sellerName: '',
-        sellerPhoneNumber: '',
-        makeName: '',
-        modelName: '',
-        fuelType: '',
-        color: '',
-        power: 0,
-        yearOfManufacture: 0,
-        price: 0,
-        id: 0
+        advertisement: advertisement,
+        action: Actions.EDIT
       }
     });
   }
