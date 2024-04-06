@@ -13,16 +13,15 @@ const routes: Routes = [
   { 
     path: 'about', 
     component: AboutComponent,
-    canActivate: [AuthGuard]
   },
   { 
     path: 'contact', 
     component: ContactComponent,
-    canActivate: [AuthGuard]
   },
   { 
     path: 'home', 
-    component: HomeComponent 
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   { 
     path: 'register', 
@@ -38,7 +37,8 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    component: UserComponent
+    component: UserComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -106,7 +106,7 @@ export class UserService {
     //   `http://localhost:8080/${this.resourceUrl}/verifyAuthentication`,
     //   {
     //     params: {
-    //       username: username,
+    //       username: username.sub,
     //       token: token,
     //     },
     //     responseType: 'text',

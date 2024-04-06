@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
 import { MakeService } from 'src/app/services/make.service';
@@ -18,6 +18,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class FormComponent implements OnInit, OnDestroy {
   showForm: boolean = false;
   selectedValue: string = "";
+  @Output() addedAdvs: EventEmitter<void> = new EventEmitter<void>();
+
 
   makes: MakeDto[] = []
   fuelTypes: FuelTypeDto[] = [];
@@ -68,13 +70,12 @@ export class FormComponent implements OnInit, OnDestroy {
   submitForm() {
     debugger
     this.advertisementService.addAdvertisement(this.sellerId, this.formData)
-    .subscribe(() => {
-      
+    .subscribe((addAdvertisement) => {
+      this.addedAdvs.emit();
     });
-    debugger
-    this.openSnackBar("Advertisement added successfully!", "Close");
-    this.dialogRef.close();
-    this.router.navigate(['/home'])
+    // debugger
+    // this.openSnackBar("Advertisement added successfully!", "Close");
+    // this.dialogRef.close();
   }
 
   openSnackBar(message: string, action: string) {

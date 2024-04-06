@@ -15,10 +15,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     debugger
-    this.userService.tokenChanged.subscribe((isAuthenticated: boolean) => {
+    this.userService.tokenChanged.subscribe((response) => {
       debugger
-      this.isAuthenticated = isAuthenticated;
+      this.isAuthenticated = response
     });
+
+    // this.userService.getCurrentUserByUsername().subscribe((user) => {
+    //   debugger
+    //   if (user) {
+    //     this.isAuthenticated = true;
+    //   }
+    // });
 
     this.userService.profileOpened.subscribe((profileOpened: boolean) => {
       debugger
@@ -33,6 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout(): void {
     debugger
+    this.isAuthenticated = false;
     this.userService.logout();
     this.userService.profileOpened.next(true);
   }

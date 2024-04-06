@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DioalogComponent } from '../dialog/dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { FormComponent } from '../form/form.component';
@@ -16,7 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  advertisements: AdvertisementView[] = [];
   displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   static advertisementId: number = 0;
@@ -27,7 +26,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private advertisementService: AdvertisementService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private _snackBar: MatSnackBar
   ) {
 
   }
@@ -41,7 +40,6 @@ export class HomeComponent implements OnInit {
     this.advertisementService.getAllAdvertisements()
       .subscribe((advertisements) => {
         debugger
-        this.advertisements = advertisements;
         this.dataSource = new MatTableDataSource(advertisements);
       });
   }
@@ -76,16 +74,13 @@ export class HomeComponent implements OnInit {
     dialog.componentInstance.deleteConfirmed.subscribe(() => {
       this.deleteAdvertisement(id);
     });
-
-    dialog.afterClosed().subscribe(() => {
-      this.refresh();
-    })
   }
 
   deleteAdvertisement(id: number) {
     this.advertisementService.deleteAdvertisement(id)
       .subscribe(() => {
         this.openSnackBar('Advertisement deleted successfully', 'Close');
+        this.refresh();
       }, (error) => {
         this.openSnackBar('Error deleting advertisement', 'Close');
       });
@@ -100,9 +95,13 @@ export class HomeComponent implements OnInit {
   addAdvertisement(): void {
     const dialog = this._dialog.open(FormComponent, {});
 
-    dialog.afterClosed().subscribe(() => {
+    dialog.componentInstance.addedAdvs.subscribe(() => {
+      this.openSnackBar('Advertisement added successfully', 'Close');
       this.refresh();
-    })
+      dialog.close();
+    }, (error) => {
+      this.openSnackBar('Error adding advertisement', 'Close');
+    });
   }
 
   onEditAdvertisementHandler(advertisement: AdvertisementView) {

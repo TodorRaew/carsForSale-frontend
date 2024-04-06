@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
 
   constructor(private userService: UserService, private router: Router, private cookie: CookieService, private route: ActivatedRoute) { }
@@ -17,8 +18,8 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     debugger
     this.loginForm = new FormGroup({
-      username: new FormControl("",[Validators.required]),
-      password: new FormControl("",[Validators.required]),
+      username: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required]),
     });
   }
 
@@ -27,25 +28,22 @@ export class LoginComponent implements OnInit{
       return;
     }
     this.userService.login(this.loginForm.value)
-    .subscribe((token) => {
-      debugger
+      .subscribe((token) => {
+        debugger
 
-      if (token) {
-        this.userService.tokenChanged.next(true);
-      } else {
-        this.userService.tokenChanged.next(false);
-      }
+        if (token) {
+          this.userService.tokenChanged.next(true);
+        } else {
+          this.userService.tokenChanged.next(false);
+        }
 
-      // const decodedToken = jwtDecode(token.token);
-      //  const expirationDate = new Date(decodedToken.exp! * 1000);
+        const decodedToken = jwtDecode(token.token);
+        const expirationDate = new Date(decodedToken.exp! * 1000);
 
-      // this.cookie.set('Authorization', `Bearer ${token.token}`, expirationDate, '/', undefined, true, 'Strict');
+        this.cookie.set('Authorization', `Bearer ${token.token}`, expirationDate, '/', undefined, true, 'Strict');
 
-      this.cookie.set('Authorization', token.token);
-      this.loginForm.reset();
-      this.router.navigate(["/home"])
-
-    });
+        this.loginForm.reset();
+        this.router.navigate(["/home"])
+      });
   }
-
 }
