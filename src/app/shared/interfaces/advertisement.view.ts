@@ -10,5 +10,6 @@ export interface AdvertisementView {
     yearOfManufacture: string,
     price: string,
     dateOfCreation: Date,
-    image: string
+    image: string,
+    createdBy: number
 }

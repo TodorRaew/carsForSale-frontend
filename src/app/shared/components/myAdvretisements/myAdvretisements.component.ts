@@ -1,54 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DioalogComponent } from '../dialog/dialog.component';
-import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
-import { FormComponent } from '../form/form.component';
-import { MakeDto } from '../../interfaces/makeDto';
-import { AdvertisementService } from 'src/app/services/advertisement.service';
-import { Actions } from '../../interfaces/enums';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from 'src/app/services/user/user.service';
+import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { User } from '../../interfaces/user';
+import { Actions } from '../../interfaces/enums';
+import { DioalogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AdvertisementService } from 'src/app/services/advertisement.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { FormComponent } from '../form/form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  selector: 'app-myAdvretisements',
+  templateUrl: './myAdvretisements.component.html',
+  styleUrls: ['./myAdvretisements.component.css']
 })
-export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
+export class MyAdvertisementsComponent implements OnInit {
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
-  static advertisementId: number = 0;
-  makes: MakeDto[] = [];
-  isAuthenticated: boolean = false;
-  canDelete: boolean = true;
+  displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   user: User | undefined;
 
-
-  constructor(
+  constructor(private _dialog: MatDialog,
     private advertisementService: AdvertisementService,
-    private _dialog: MatDialog,
+    private userService: UserService,
     private _snackBar: MatSnackBar,
-    private userService: UserService
-  ) {
 
-  }
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     debugger
-    this.refresh();
-    this.loadUser();
+    this.loadUserAndRefresh();
   }
 
   private refresh() {
     debugger
-    this.advertisementService.getAllAdvertisements()
-      .subscribe((advertisements) => {
-        debugger
-        this.dataSource = new MatTableDataSource(advertisements);
-      });
+    if (this.user) {
+      this.advertisementService.getAllMyAdvertisements(this.user?.username)
+        .subscribe((advertisements) => {
+          debugger
+          this.dataSource = new MatTableDataSource(advertisements);
+        });
+    }
   }
 
   applyFilter(event: Event) {
@@ -121,12 +114,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  loadUser() {
+  private loadUserAndRefresh() {
     debugger
-    this.userService.getCurrentUserByUsername().subscribe((user) => {
-      debugger
-      this.user = user;
-    });
+    const username = this.userService.getCurrentUserName() as string;
 
+    this.advertisementService.getAllMyAdvertisements(username).subscribe({
+      next: (advertisements) => {
+        debugger
+        this.dataSource = new MatTableDataSource(advertisements);
+      }
+    });
   }
 }
+

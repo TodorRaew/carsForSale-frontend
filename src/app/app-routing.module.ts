@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './shared/components/about/about.component';
-import { ContactComponent } from './shared/components/contact/contact.component';
+import { MyAdvertisementsComponent } from './shared/components/myAdvretisements/myAdvretisements.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
@@ -15,8 +15,8 @@ const routes: Routes = [
     component: AboutComponent,
   },
   { 
-    path: 'contact', 
-    component: ContactComponent,
+    path: 'myAdvertisements', 
+    component: MyAdvertisementsComponent,
   },
   { 
     path: 'home', 

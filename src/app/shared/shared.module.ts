@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactComponent } from './components/contact/contact.component';
+import { MyAdvertisementsComponent } from './components/myAdvretisements/myAdvretisements.component';
 import { AboutComponent } from './components/about/about.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -19,10 +19,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserComponent } from './components/user/user.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
-  declarations: [ContactComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent, UserComponent],
+  declarations: [MyAdvertisementsComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent, UserComponent],
   imports: [
     CommonModule, RouterModule,
     MatTableModule,
@@ -34,9 +35,10 @@ import { UserComponent } from './components/user/user.component';
     ReactiveFormsModule,
     MatMenuModule,
     MatSelectModule,
+    MatDialogModule,
     FormsModule,
     MatSnackBarModule
   ],
-  exports: [ContactComponent, AboutComponent, HomeComponent]
+  exports: [MyAdvertisementsComponent, AboutComponent, HomeComponent]
 })
 export class SharedModule { }

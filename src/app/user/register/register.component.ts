@@ -13,11 +13,11 @@ export class RegisterComponent {
 
   registerForm = new FormGroup({
     email: new FormControl("", [Validators.email, Validators.required]),
-    username: new FormControl("", [Validators.required]),
-    password: new FormControl("", [Validators.required]),
-    repassword: new FormControl("", [Validators.required]),
+    username: new FormControl("", [Validators.required, Validators.minLength(3)]),
+    password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+    repassword: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
     phoneNumber: new FormControl("", [Validators.required]),
-    city: new FormControl("", [Validators.required]),
+    city: new FormControl("", [Validators.required, Validators.maxLength(100)]),
   });
 
   constructor(private userService: UserService, private router: Router, private _snackBar: MatSnackBar,

@@ -4,89 +4,91 @@
         <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative"
             style="background-image: url(../../../assets/car-deal.jpg);">
             <div class="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0"></div>
-            <div class="absolute triangle  min-h-screen right-0 w-16" style=""></div>
-            <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
         </div>
         <div
             class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-white ">
             <div class="max-w-md w-full space-y-8">
                 <div class="text-center">
                     <h2 class="mt-6 text-3xl font-bold text-gray-900">
-                        Create Your Account
+                        Създайте вашият профил
                     </h2>
                 </div>
-                <form class="mt-8 space-y-6" (ngSubmit)="onSubmitHandler()" [formGroup]="registerForm">
-                    <input type="hidden" name="remember" value="true">
-                    <div class="relative">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">Email</label>
-                        <input
-                        formControlName="email"
-                            class=" w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-indigo-500"
-                            type="" placeholder="mail@gmail.com">
-                    </div>
-                    <div class="mt-8 content-center">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
-                            Username
-                        </label>
-                        <input
-                            formControlName="username"
-                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
-                            type="" placeholder="Enter your username">
-                    </div>
-                    <div class="mt-8 content-center">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
-                            Password
-                        </label>
-                        <input
-                            formControlName="password"
-                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
-                            type="" placeholder="Enter your password">
-                    </div>
+                <form class="bg-white shadow-md rounded px-5 pt-6 pb-8 mb-4" (ngSubmit)="onSubmitHandler()"
+                    [formGroup]="registerForm">
+                    <mat-form-field class="px-5 w-full">
+                        <mat-label>Имейл адрес</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+                            Полето за имейл e задължително.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+                            Моля, въведете валиден имейл адрес.
+                        </mat-error>
+                    </mat-form-field>
 
-                    <div class="mt-8 content-center">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
-                            Re-Password
-                        </label>
-                        <input
-                            formControlName="repassword"
-                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
-                            type="" placeholder="Enter your password">
-                    </div>
+                    <mat-form-field class="px-5 w-full">
+                        <mat-label>Потребителско име</mat-label>
+                        <input matInput formControlName="username">
+                        <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
+                            Полето за потребителско име e задължително.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">
+                            Потребителското име трябва да e поне 3 символа.
+                        </mat-error>
+                    </mat-form-field>
 
-                    <div class="mt-8 content-center">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
-                            Phone
-                        </label>
-                        <input
-                            formControlName="phoneNumber"
-                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
-                            type="" placeholder="Enter your phone">
-                    </div>
+                    <mat-form-field class="px-5 w-full">
+                        <mat-label>Парола</mat-label>
+                        <input type="password" matInput formControlName="password">
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+                            Полето за парола e задължително.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+                            Паролата трябва да e поне 8 символа.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('maxlength')">
+                            Паролата не може да бъде повече от 20 символа.
+                        </mat-error>
+                    </mat-form-field>
 
-                    <div class="mt-8 content-center">
-                        <label class="ml-3 text-sm font-bold text-gray-700 tracking-wide">
-                            City
-                        </label>
-                        <input
-                            formControlName="city"
-                            class="w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
-                            type="" placeholder="Enter your city">
-                    </div>
-                    <div>
-                        <button type="submit"
-                            class="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
-                            Register
+                    <mat-form-field class="px-5 w-full">
+                        <mat-label>Потвърждение на парола</mat-label>
+                        <input type="password" matInput formControlName="repassword">
+                        <mat-error *ngIf="registerForm.get('repassword')?.hasError('required')">
+                            Полето за парола e задължително.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+                            Полето за парола e задължително.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+                            Паролата трябва да e поне 8 символа.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('password')?.hasError('maxlength')">
+                            Паролата не може да бъде повече от 20 символа.
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="px-5 w-full">
+                        <mat-label>Телефонен номер</mat-label>
+                        <input matInput formControlName="phoneNumber">
+                        <mat-error *ngIf="registerForm.get('phoneNumber')?.hasError('required')">
+                            Полето за телефонен номер e задължително.
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="px-5 w-full">
+                        <mat-label>Град</mat-label>
+                        <input matInput formControlName="city">
+                        <mat-error *ngIf="registerForm.get('city')?.hasError('required')">
+                            Полето за град e задължително.
+                        </mat-error>
+                        <mat-error *ngIf="registerForm.get('city')?.hasError('maxlength')">
+                            Името на града не може да бъде повече от 100 символа.
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="flex justify-center items-center h-24">
+                        <button type="submit" [routerLink]="['/login']" mat-button
+                            class='w-64 m-5 px-4 py-2 text-sm rounded-full font-bold text-white bg-[#007bff] transition-all ease-in-out duration-300'>Регистрация
                         </button>
                     </div>
                 </form>

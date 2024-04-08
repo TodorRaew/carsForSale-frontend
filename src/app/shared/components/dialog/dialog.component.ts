@@ -10,7 +10,7 @@ import { Actions } from '../../interfaces/enums';
   styleUrls: ['./dialog.component.css'],
 })
 export class DioalogComponent implements OnInit {
-  title: string = 'View Advertisement';
+  title: string = 'Преглед на обява';
   visibilityDialogFormGroup = new FormGroup({
     sellerName: new FormControl({ value: '', disabled: true },[]),
     phone: new FormControl({ value: '', disabled: true },[]),
@@ -29,7 +29,7 @@ export class DioalogComponent implements OnInit {
 
     ngOnInit(): void {
       if(this.data.action === Actions.EDIT){
-        this.title = 'Edit Advertisement'
+        this.title = 'Редакция на обява'
         this.visibilityDialogFormGroup.enable();  
         this.visibilityDialogFormGroup.controls.sellerName.disable();
         

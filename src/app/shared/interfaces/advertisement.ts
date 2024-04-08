@@ -1,6 +1,6 @@
 export interface Advertisement {
     id: number;
-    sellerId: number;
+    userId: number;
     makeId: number;
     color: string;
     power: number;
