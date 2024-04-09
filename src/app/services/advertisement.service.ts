@@ -50,6 +50,31 @@ export class AdvertisementService {
       })
   }
 
+  updateAdvertisement(sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
+
+    const userId = Number(sellerId);
+    const phoneNumber = _form.value.phoneNumber;
+    const makeId = Number(_form.value.makeId);
+    const fuelTypeId = Number(_form.value.fuelTypeId);
+    const color = _form.value.color;
+    const power = _form.value.power;
+    const yearOfManufacture = _form.value.yearOfManufacture;
+    const price = _form.value.price;
+    const dateOfCreation = _form.value.dateOfCreation;
+
+    return this.http.put<Advertisement>(`${this.URL}/${this.resourceUrl}/${_id}`, {
+      userId,
+      phoneNumber,
+      makeId,
+      fuelTypeId,
+      color,
+      power,
+      yearOfManufacture,
+      price,
+      dateOfCreation
+    })
+  }
+
   getAllAdvertisements() {
     debugger
     return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisements`);

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/shared/interfaces/user';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   profileOpened: boolean = true;
+  user: User | undefined;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -18,14 +20,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userService.tokenChanged.subscribe((response) => {
       debugger
       this.isAuthenticated = response
+      if (this.isAuthenticated) {
+        this.getUser();
+      }
     });
 
-    // this.userService.getCurrentUserByUsername().subscribe((user) => {
-    //   debugger
-    //   if (user) {
-    //     this.isAuthenticated = true;
-    //   }
-    // });
+
 
     this.userService.profileOpened.subscribe((profileOpened: boolean) => {
       debugger
@@ -49,5 +49,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     debugger
     this.router.navigate(['/user']);
     this.userService.profileOpened.next(true);
+  }
+
+  getUser() {
+    this.userService.getCurrentUserByUsername().subscribe((user) => {
+      if (user) {
+        this.user = user;
+      }
+    });
   }
 }

@@ -10,37 +10,37 @@
                 <input matInput class="w-full" formControlName="sellerName">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Телефонен номер</mat-label>
                 <input matInput class="w-full" formControlName="phone">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Марка</mat-label>
                 <input matInput class="w-full" formControlName="makeName">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Модел</mat-label>
                 <input matInput class="w-full" formControlName="modelName">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Вид гориво</mat-label>
                 <input matInput class="w-full" formControlName="fuelTypeName">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Цвят</mat-label>
                 <input matInput class="w-full" formControlName="color">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Мощност(к.с.)</mat-label>
                 <input matInput class="w-full" formControlName="power">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Година на производство</mat-label>
                 <input matInput class="w-full" formControlName="yearOfManufacture">
             </mat-form-field>
@@ -58,9 +58,17 @@
         </div>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button
-    class='py-1 w-40 text-sm rounded-full font-bold text-white border-2 border-[#E53E31] bg-[#E53E31]'
-    (click)="onNoClick()" mat-button mat-dialog-close>Затвори</button>
+<mat-dialog-actions *ngIf="action === 'edit'">
+    <div class="flex justify-between w-full">
+        <button
+            class="text-sm text-center ml-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#E53E31] bg-[#E53E31]"
+            (click)="onCancelClick()" mat-button mat-dialog-close> Отказ </button>
+        <button             class="text-sm text-center mr-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]"
+            (click)="updateRecord()" mat-button mat-dialog-close> Запази </button>
+    </div>
 </mat-dialog-actions>
 
+<mat-dialog-actions align="end" *ngIf="action === 'view'">
+    <button class="text-sm text-center ml-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#E53E31] bg-[#E53E31]"
+        (click)="onNoClick()" mat-button mat-dialog-close> Затвори </button>
+</mat-dialog-actions>

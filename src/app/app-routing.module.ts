@@ -17,6 +17,7 @@ const routes: Routes = [
   { 
     path: 'myAdvertisements', 
     component: MyAdvertisementsComponent,
+    canActivate: [AuthGuard]
   },
   { 
     path: 'home', 
