@@ -50,7 +50,7 @@ export class UserService {
   logout() {
     this.cookie.delete('Authorization');
     this.tokenChanged.next(false);
-    this.router.navigate(["/login"])
+    // this.router.navigate(["/login"])
   }
 
   getUserByEmail(form: FormGroup) {

@@ -65,27 +65,33 @@
             <th mat-header-cell *matHeaderCellDef> Действия </th>
             <td mat-cell *matCellDef="let row">
                 <div class="flex space-x-4">
-                    <button class="viewBtn" (click)="openDialog(row)">
+                    <button matTooltip="Преглед" matTooltipPosition="above" class="viewBtn" (click)="openDialog(row)">
                         <mat-icon>visibility</mat-icon>
                     </button>
                     <div *ngIf="row.createdBy !== user?.id">
-                        <button disabled class="editBtn text-gray-300" (click)="onEditAdvertisementHandler(row)">
+                        <button matTooltip="Не можете да редактирате обява, която не сте създали!"
+                            matTooltipPosition="above" disabled class="editBtn text-gray-300"
+                            (click)="onEditAdvertisementHandler(row)">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </div>
                     <div *ngIf="row.createdBy !== user?.id">
-                        <button disabled class="deleteBtn text-gray-300"
+                        <button matTooltip="Не можете да изтриете обява, която не сте създали!"
+                            matTooltipPosition="above" disabled class="deleteBtn text-gray-300"
                             (click)="openDeleteDialog(row.id, '0ms', '0ms')">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
                     <div *ngIf="row.createdBy === user?.id">
-                        <button class="editBtn" (click)="onEditAdvertisementHandler(row)">
+                        <button 
+                        matTooltip="Редакция" matTooltipPosition="above"
+                        class="editBtn" (click)="onEditAdvertisementHandler(row)">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </div>
                     <div *ngIf="row.createdBy === user?.id">
-                        <button class="deleteBtn" (click)="openDeleteDialog(row.id, '0ms', '0ms')">
+                        <button matTooltip="Изтрий" matTooltipPosition="above" class="deleteBtn"
+                            (click)="openDeleteDialog(row.id, '0ms', '0ms')">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>

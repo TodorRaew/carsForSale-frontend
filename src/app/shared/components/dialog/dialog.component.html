@@ -3,8 +3,6 @@
     <form [formGroup]="visibilityDialogFormGroup" class="bg-white shadow-md rounded pt-6 pb-8 mb-4">
 
         <div class="grid grid-cols-2 gap-x-3 px-4">
-
-
             <mat-form-field>
                 <mat-label>Име на продавач</mat-label>
                 <input matInput class="w-full" formControlName="sellerName">
@@ -63,12 +61,14 @@
         <button
             class="text-sm text-center ml-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#E53E31] bg-[#E53E31]"
             (click)="onCancelClick()" mat-button mat-dialog-close> Отказ </button>
-        <button             class="text-sm text-center mr-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]"
+        <button
+            class="text-sm text-center mr-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]"
             (click)="updateRecord()" mat-button mat-dialog-close> Запази </button>
     </div>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="end" *ngIf="action === 'view'">
-    <button class="text-sm text-center ml-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#E53E31] bg-[#E53E31]"
+    <button
+        class="text-sm text-center ml-4 px-4 py-2 m-2 rounded-full font-bold text-white border-2 border-[#E53E31] bg-[#E53E31]"
         (click)="onNoClick()" mat-button mat-dialog-close> Затвори </button>
 </mat-dialog-actions>

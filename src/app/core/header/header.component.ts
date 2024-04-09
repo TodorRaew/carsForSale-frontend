@@ -11,24 +11,20 @@ import { User } from 'src/app/shared/interfaces/user';
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   profileOpened: boolean = true;
-  user: User | undefined;
+  username?: string;
 
   constructor(private userService: UserService, private router: Router) { }
 
-  ngOnInit(): void {
-    debugger
+  ngOnInit() {
+    const username = this.userService.getCurrentUserName() as string;
+
+    this.username = username;
+
     this.userService.tokenChanged.subscribe((response) => {
-      debugger
       this.isAuthenticated = response
-      if (this.isAuthenticated) {
-        this.getUser();
-      }
     });
 
-
-
     this.userService.profileOpened.subscribe((profileOpened: boolean) => {
-      debugger
       this.profileOpened = profileOpened;
     })
   }
@@ -47,15 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   viewUser(): void {
     debugger
-    this.router.navigate(['/user']);
+    // this.router.navigate(['/user']);
     this.userService.profileOpened.next(true);
-  }
-
-  getUser() {
-    this.userService.getCurrentUserByUsername().subscribe((user) => {
-      if (user) {
-        this.user = user;
-      }
-    });
   }
 }

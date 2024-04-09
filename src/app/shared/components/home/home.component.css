@@ -11,11 +11,3 @@ td,
 th {
   width: 25%;
 }
-
-.deleteBtn:hover {
-  cursor: pointer;
-}
-
-.viewBtn:hover {
-  cursor: pointer;
-}
