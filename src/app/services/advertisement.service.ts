@@ -6,9 +6,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserService } from './user/user.service';
 import { AdvertisementView } from '../shared/interfaces/advertisement.view';
 import { Advertisement } from '../shared/interfaces/advertisement';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AdvertisementOutView } from '../shared/interfaces/advertisementOutView';
 import { User } from '../shared/interfaces/user';
+import { MakeService } from './make.service';
+import { FuelTypeService } from './fuel-type.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,9 @@ export class AdvertisementService {
   resourceUrl = `api/v1`
   user: User | undefined;
 
-  constructor(private http: HttpClient, private cookie: CookieService, private userService: UserService) { }
+  constructor(private http: HttpClient, private cookie: CookieService, private userService: UserService,
+    private makeService: MakeService,
+    private fuelTypeService: FuelTypeService) { }
 
   addAdvertisement(sellerId: number, form: FormGroup): Observable<Advertisement> {
     debugger
@@ -51,28 +56,45 @@ export class AdvertisementService {
   }
 
   updateAdvertisement(sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
+    const makeName = _form.controls['makeName'].value;
+    const fuelTypeName = _form.controls['fuelTypeName'].value;
+    const modelName = _form.controls['modelName'].value;
 
-    const userId = Number(sellerId);
-    const phoneNumber = _form.value.phoneNumber;
-    const makeId = Number(_form.value.makeId);
-    const fuelTypeId = Number(_form.value.fuelTypeId);
-    const color = _form.value.color;
-    const power = _form.value.power;
-    const yearOfManufacture = _form.value.yearOfManufacture;
-    const price = _form.value.price;
-    const dateOfCreation = _form.value.dateOfCreation;
+    let makeId: number;
+    let fuelTypeId: number;
+    debugger
+    return forkJoin([
+      this.makeService.getByName(makeName, modelName),
+      this.fuelTypeService.getByName(fuelTypeName)
+    ]).pipe(
+      switchMap(([make, fuelType]) => {
+        debugger
+        makeId = make.id;
+        fuelTypeId = fuelType.id;
 
-    return this.http.put<Advertisement>(`${this.URL}/${this.resourceUrl}/${_id}`, {
-      userId,
-      phoneNumber,
-      makeId,
-      fuelTypeId,
-      color,
-      power,
-      yearOfManufacture,
-      price,
-      dateOfCreation
-    })
+        debugger
+        const userId = Number(sellerId);
+        const phoneNumber = _form.value.phone;
+        const color = _form.value.color;
+        const power = _form.value.power;
+        const yearOfManufacture = _form.value.yearOfManufacture;
+        const price = _form.value.price;
+        const dateOfCreation = _form.value.dateOfCreation;
+
+        debugger
+        return this.http.put<Advertisement>(`${this.URL}/${this.resourceUrl}/${_id}`, {
+          userId,
+          phoneNumber,
+          makeId,
+          fuelTypeId,
+          color,
+          power,
+          yearOfManufacture,
+          price,
+          dateOfCreation
+        });
+      })
+    );
   }
 
   getAllAdvertisements() {
@@ -83,7 +105,7 @@ export class AdvertisementService {
   getAllMyAdvertisements(user: string) {
 
     let param = new HttpParams().set('username', user);
-    
+
     debugger
     return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/myAdvertisements`, {
       params: param

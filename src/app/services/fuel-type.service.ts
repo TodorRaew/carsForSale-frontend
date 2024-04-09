@@ -19,4 +19,12 @@ export class FuelTypeService {
       headers: {Authorization: this.cookie.get('Authorization')}
     })
   }
+
+  getByName(name: string) {
+    return this.http.get<FuelTypeDto>(`${this.URL}/${this.resourceUrl}/fuelType`, {
+      params: {
+        name
+      }
+    });
+  }
 }

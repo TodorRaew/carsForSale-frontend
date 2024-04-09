@@ -16,7 +16,16 @@ export class MakeService {
   getAllMakes() {
     debugger
     return this.http.get<MakeDto[]>(`${this.URL}/make`, {
-      headers: {Authorization: this.cookie.get('Authorization')}
+      headers: { Authorization: this.cookie.get('Authorization') }
     })
+  }
+
+  getByName(name: string, modelName: string) {
+    return this.http.get<MakeDto>(`${this.URL}/make/byName`, {
+      params: {
+        name,
+        modelName
+      }
+    });
   }
 }
