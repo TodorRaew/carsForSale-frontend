@@ -21,12 +21,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserComponent } from './components/user/user.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MapComponent } from './components/map/map.component';
+
 
 
 @NgModule({
-  declarations: [MyAdvertisementsComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent, UserComponent],
+  declarations: [MyAdvertisementsComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent, UserComponent, MapComponent],
   imports: [
-    CommonModule, RouterModule,
+    CommonModule, 
+    RouterModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
