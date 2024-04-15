@@ -136,4 +136,16 @@ export class UserService {
     const data = await lastValueFrom(access);
     return data;
   }
+
+  updateUser(username: string, imageUrl: string): void {
+    debugger
+    
+    this.http.put(`${this.URL}/user/profileImage`, {
+      headers: { Authorization: this.cookie.get('Authorization') },
+      params: {
+        username: username,
+        imageUrl: imageUrl
+      }
+    });
+  }
 }

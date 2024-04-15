@@ -12,13 +12,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   profileOpened: boolean = true;
   username?: string;
+  profileImageUrl?: string;
+  user: User | undefined;
 
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    const username = this.userService.getCurrentUserName() as string;
-
-    this.username = username;
+    const user = this.userService.getCurrentUserByUsername().subscribe((user: User) => {
+      this.user = user;
+    });
 
     this.userService.tokenChanged.subscribe((response) => {
       this.isAuthenticated = response
@@ -45,5 +47,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     debugger
     // this.router.navigate(['/user']);
     this.userService.profileOpened.next(true);
+    this.userService.getCurrentUserByUsername().subscribe((user: User) => {
+      this.profileImageUrl = user.profileImageUrl;
+    });
   }
 }
