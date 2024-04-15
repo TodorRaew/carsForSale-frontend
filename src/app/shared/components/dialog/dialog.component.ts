@@ -10,6 +10,7 @@ import { FuelTypeDto } from '../../interfaces/fuelTypeDto';
 import { MakeService } from 'src/app/services/make.service';
 import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { image } from '@cloudinary/url-gen/qualifiers/source';
 
 @Component({
   selector: 'app-dioalog',
@@ -33,7 +34,8 @@ export class DioalogComponent implements OnInit {
     color: new FormControl({ value: '', disabled: true }, []),
     power: new FormControl({ value: '', disabled: true }, []),
     yearOfManufacture: new FormControl({ value: '', disabled: true }, []),
-    price: new FormControl({ value: '', disabled: true }, [])
+    price: new FormControl({ value: '', disabled: true }, []),
+    imageUrl: new FormControl({ value: '', disabled: true }, []),
   });
 
   constructor(public dialogRef: MatDialogRef<DioalogComponent>,
@@ -74,6 +76,7 @@ export class DioalogComponent implements OnInit {
       power: this.data.advertisement.power,
       yearOfManufacture: this.data.advertisement.yearOfManufacture,
       price: this.data.advertisement.price,
+      imageUrl: this.data.advertisement.image
     });
 
     this.userService.getCurrentUserByUsername().subscribe((user) => {

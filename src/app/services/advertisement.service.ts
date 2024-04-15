@@ -39,6 +39,7 @@ export class AdvertisementService {
     const yearOfManufacture = form.value.yearOfManufacture;
     const price = form.value.price;
     const dateOfCreation = form.value.dateOfCreation;
+    const imageUrl = form.value.imageUrl;
     debugger
 
     return this.http
@@ -51,7 +52,8 @@ export class AdvertisementService {
         power,
         yearOfManufacture,
         price,
-        dateOfCreation
+        dateOfCreation,
+        imageUrl
       })
   }
 

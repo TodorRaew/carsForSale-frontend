@@ -1,3 +1,5 @@
+declare var cloudinary: any;
+
 import { Component, OnInit } from '@angular/core';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,6 +13,7 @@ import { Actions } from '../../interfaces/enums';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../interfaces/user';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',

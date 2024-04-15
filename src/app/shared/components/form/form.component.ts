@@ -8,10 +8,8 @@ import { MakeDto } from '../../interfaces/makeDto';
 import { FuelTypeDto } from '../../interfaces/fuelTypeDto';
 import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 @Component({
   selector: 'app-form',
@@ -27,18 +25,18 @@ export class FormComponent implements OnInit, OnDestroy {
   fuelTypes: FuelTypeDto[] = [];
   sellerId: number = 0;
 
-
-  constructor(private advertisementService: AdvertisementService,
+  constructor(
+    private advertisementService: AdvertisementService,
     private makeService: MakeService,
     private fuelTypeService: FuelTypeService,
     private userService: UserService,
-    private router: Router,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<FormComponent>,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+  }
 
   formData = new FormGroup({
-    sellerName: new FormControl({value: this.userService.getCurrentUserName(), disabled: true},  [Validators.required]),
+    sellerName: new FormControl({ value: this.userService.getCurrentUserName(), disabled: true }, [Validators.required]),
     phoneNumber: new FormControl("", [Validators.required]),
     makeId: new FormControl("", [Validators.required]),
     fuelTypeId: new FormControl("", [Validators.required]),
@@ -73,12 +71,9 @@ export class FormComponent implements OnInit, OnDestroy {
   submitForm() {
     debugger
     this.advertisementService.addAdvertisement(this.sellerId, this.formData)
-    .subscribe((addAdvertisement) => {
-      this.addedAdvs.emit();
-    });
-    // debugger
-    // this.openSnackBar("Advertisement added successfully!", "Close");
-    // this.dialogRef.close();
+      .subscribe(() => {
+        this.addedAdvs.emit();
+      });
   }
 
   openSnackBar(message: string, action: string) {
@@ -92,12 +87,21 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   openCloudinaryUploader(): void {
-    // open image-upload component
-    this.dialog.open(ImageUploadComponent, {
-      width: '700px',
-      height: '200px',
+    debugger
+    cloudinary.openUploadWidget({
+      cloudName: 'dvxb1tlbs',
+      uploadPreset: 'ml_default',
+      sources: ['local'],
+      showAdvancedOptions: false,
+      cropping: true,
+      multiple: false,
+      defaultSource: 'local'
+    }, (error: Error, result: any) => {
+      debugger
+      if (!error && result && result.event === "success") {
+        debugger
+        this.formData.get('imageUrl')?.setValue(result.info.secure_url);
+      }
     });
   }
-
-  
 }

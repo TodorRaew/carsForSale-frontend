@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdvertisementService } from 'src/app/services/advertisement.service';
 
 @Component({
   selector: 'app-image-upload',
@@ -8,7 +9,7 @@ import { Component } from '@angular/core';
 export class ImageUploadComponent {
     files: File[] = [];
 
-  constructor() { }
+  constructor(private advService: AdvertisementService) { }
 
   onSelect(event: any) {
     debugger
