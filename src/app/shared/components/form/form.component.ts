@@ -1,3 +1,5 @@
+declare var cloudinary: any;
+
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
@@ -9,6 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 @Component({
   selector: 'app-form',
@@ -19,7 +22,6 @@ export class FormComponent implements OnInit, OnDestroy {
   showForm: boolean = false;
   selectedValue: string = "";
   @Output() addedAdvs: EventEmitter<void> = new EventEmitter<void>();
-
 
   makes: MakeDto[] = []
   fuelTypes: FuelTypeDto[] = [];
@@ -44,6 +46,7 @@ export class FormComponent implements OnInit, OnDestroy {
     power: new FormControl("", [Validators.required]),
     yearOfManufacture: new FormControl("", [Validators.required]),
     price: new FormControl("", [Validators.required]),
+    imageUrl: new FormControl(null, [Validators.required]),
   });
 
   ngOnInit() {
@@ -87,4 +90,14 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.userService.tokenChanged.unsubscribe();
   }
+
+  openCloudinaryUploader(): void {
+    // open image-upload component
+    this.dialog.open(ImageUploadComponent, {
+      width: '700px',
+      height: '200px',
+    });
+  }
+
+  
 }

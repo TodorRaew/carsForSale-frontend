@@ -22,13 +22,23 @@ import { UserComponent } from './components/user/user.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MapComponent } from './components/map/map.component';
-
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 
 @NgModule({
-  declarations: [MyAdvertisementsComponent, AboutComponent, HomeComponent, DioalogComponent, DialogAnimationsComponent, FormComponent, UserComponent, MapComponent],
+  declarations: [
+    MyAdvertisementsComponent,
+    AboutComponent,
+    HomeComponent,
+    DioalogComponent,
+    DialogAnimationsComponent,
+    FormComponent,
+    UserComponent,
+    MapComponent,
+    ImageUploadComponent
+  ],
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule,
     MatTableModule,
     MatPaginatorModule,
@@ -42,7 +52,8 @@ import { MapComponent } from './components/map/map.component';
     MatDialogModule,
     FormsModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxDropzoneModule
   ],
   exports: [MyAdvertisementsComponent, AboutComponent, HomeComponent]
 })

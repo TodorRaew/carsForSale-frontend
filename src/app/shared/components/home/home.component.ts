@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DioalogComponent } from '../dialog/dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { FormComponent } from '../form/form.component';

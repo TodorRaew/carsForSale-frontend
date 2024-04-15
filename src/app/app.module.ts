@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from './shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { CloudinaryModule } from '@cloudinary/ng';
 @NgModule({
   declarations: [
     AppComponent
@@ -30,7 +30,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HttpClientModule,
     MatButtonModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    CloudinaryModule
   ],
   providers: [CookieService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]

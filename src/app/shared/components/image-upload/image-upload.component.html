@@ -1,0 +1,11 @@
+<!-- <input type="file" (change)="onFileSelected($event)" accept="image/*">
+ -->
+
+ <div >
+	 <ngx-dropzone (change)="onSelect($event)">
+		 <ngx-dropzone-label>Drop here!</ngx-dropzone-label>
+		 <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+			 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+		 </ngx-dropzone-preview>
+	 </ngx-dropzone>
+ </div>
