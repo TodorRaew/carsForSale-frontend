@@ -15,7 +15,7 @@
 
             <mat-form-field>
                 <mat-label>Марка</mat-label>
-                <mat-select class="w-full" formControlName="makeName">
+                <mat-select class="w-full" (selectionChange)="onMakeSelectionChange($event)" formControlName="makeName">
                     <mat-option *ngFor="let make of makes" [value]="make.name">{{ make.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -23,7 +23,7 @@
             <mat-form-field>
                 <mat-label>Модел</mat-label>
                 <mat-select class="w-full" formControlName="modelName">
-                    <mat-option *ngFor="let make of makes" [value]="make.modelName">{{ make.modelName}}</mat-option>
+                    <mat-option *ngFor="let model of models" [value]="model">{{ model}}</mat-option>
                 </mat-select>
             </mat-form-field>
 

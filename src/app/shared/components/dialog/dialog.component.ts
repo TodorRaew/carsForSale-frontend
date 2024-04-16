@@ -12,6 +12,8 @@ import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { image } from '@cloudinary/url-gen/qualifiers/source';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSelectChange } from '@angular/material/select';
+import { ModelService } from 'src/app/services/model.service';
 
 @Component({
   selector: 'app-dioalog',
@@ -24,6 +26,7 @@ export class DioalogComponent implements OnInit {
   action: string = 'view';
   sellerId: number = 0;
   makes: MakeDto[] = []
+  models: string[] = [];
   fuelTypes: FuelTypeDto[] = [];
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   @Output() updateConfirmed: EventEmitter<void> = new EventEmitter<void>();
@@ -49,7 +52,8 @@ export class DioalogComponent implements OnInit {
     private userService: UserService,
     private makeService: MakeService,
     private fuelTypeService: FuelTypeService,
-    private _snackBar: MatSnackBar,) {
+    private _snackBar: MatSnackBar,
+    private modelService: ModelService) {
   }
 
   ngOnInit(): void {
@@ -108,6 +112,16 @@ export class DioalogComponent implements OnInit {
         debugger
         this.updateConfirmed.emit();
       });
+  }
+
+  onMakeSelectionChange(event: MatSelectChange) {
+    debugger
+    const selectedMake = event.value;
+    // Извикайте вашата услуга за връщане на моделите в зависимост от избраната марка
+    this.modelService.getAllModelsByMakeName(selectedMake).subscribe((models) => {
+      debugger
+      this.models = models;
+    });
   }
 
   openSnackBar(message: string, action: string) {
