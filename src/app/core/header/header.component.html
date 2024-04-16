@@ -13,6 +13,9 @@
       </div>
       <div *ngIf="isAuthenticated" class="butonsContainer mr-10 cursor-not-allowed md:cursor-auto">
         <div class="profileContainer py-4 cursor-pointer flex items-center" (click)="profileOpened = !profileOpened">
+          <span class="mr-1 font-bold">
+            Добре дошли, {{user?.username}}!
+          </span>
           <div class="flex items-center">
             <div class="profile-container cursor-pointer">
               <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden">
@@ -20,9 +23,6 @@
               </div>
             </div>
           </div>
-          <span class="ml-1 mb-1 font-bold">
-            Добре дошли, {{user?.username}}!
-          </span>
         </div>
         <div *ngIf="!profileOpened" class="mr-5">
           <div

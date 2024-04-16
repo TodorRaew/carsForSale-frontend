@@ -78,6 +78,25 @@ export class UserComponent implements OnInit {
 
   private refresh() {
     debugger
-    this.ngOnInit();
+    this.userService.getCurrentUserByUsername()
+      .subscribe({
+        next: (user: User) => {
+          debugger
+          this.user = user;
+          this.viewUserFormGroup.get('username')?.setValue(user.username);
+          this.viewUserFormGroup.get('email')?.setValue(user.email);
+          this.viewUserFormGroup.get('phoneNumber')?.setValue(user.phoneNumber);
+          this.viewUserFormGroup.get('location')?.setValue(user.location);
+          this.viewUserFormGroup.get('role')?.setValue(user.role);
+
+          if (user.image) {
+            this.imageUrl = user.image;
+          }
+        },
+        error: (error: Error) => {
+          debugger
+          console.log(error);
+        }
+      })
   }
 }
