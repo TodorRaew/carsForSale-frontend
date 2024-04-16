@@ -12,11 +12,11 @@
         </button>
       </div>
       <div *ngIf="isAuthenticated" class="butonsContainer mr-10 cursor-not-allowed md:cursor-auto">
-        <div class="profileContainer py-4 flex items-center" (click)="profileOpened = !profileOpened">
+        <div class="profileContainer py-4 cursor-pointer flex items-center" (click)="profileOpened = !profileOpened">
           <div class="flex items-center">
             <div class="profile-container cursor-pointer">
               <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden">
-                <img [src]="user?.profileImageUrl" alt="img" class="w-full h-auto">
+                <img [src]="user?.image" alt="img" class="w-full h-auto">
               </div>
             </div>
           </div>

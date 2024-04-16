@@ -140,12 +140,17 @@ export class UserService {
   updateUser(username: string, imageUrl: string): void {
     debugger
     
-    this.http.put(`${this.URL}/user/profileImage`, {
-      headers: { Authorization: this.cookie.get('Authorization') },
+    this.http.put(`${this.URL}/user/profileImage`, {}, {
       params: {
         username: username,
         imageUrl: imageUrl
       }
+    }).subscribe(() => {
+      debugger
+      // Логика при успешно изпращане на заявката
+    }, (error) => {
+      debugger
+      // Логика при грешка
     });
-  }
+}
 }

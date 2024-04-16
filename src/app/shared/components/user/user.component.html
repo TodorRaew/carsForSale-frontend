@@ -1,5 +1,9 @@
 <h1 class="pl-5 pr-5 pt-5" mat-dialog-title> Преглед на профил </h1>
 <form [formGroup]="viewUserFormGroup" class="bg-white shadow-md rounded px-5 pt-6 pb-8 mb-4">
+    <div class="px-5 text-[#9B9B9B] cursor-not-allowed flex justify-center items-center">
+        <!-- <label>Профилна снимка</label> -->
+        <img [src]="user?.image" alt="img" class="w-64 h-64 rounded-full">
+    </div>
     <div class="grid grid-cols-2 gap-2">
         <mat-form-field class="p-1">
             <mat-label>Потребителско име</mat-label>
@@ -27,15 +31,9 @@
         </mat-form-field>
 
     </div>
-    <div class="px-5 text-[#9B9B9B] cursor-not-allowed">
-        <label>Профилна снимка</label>
-        <img [src]="user?.profileImageUrl" alt="img" class="w-36 h-36 rounded-full">
-    </div>
-
-
 </form>
 <div class="w-full flex justify-start p-5">
-    <div (click)="openCloudinaryUploader()" class="profileContainer p-2 flex w-64 pl-6 mr-5 items-center text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]  ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
+    <div (click)="openCloudinaryUploader()" class="profileContainer cursor-pointer p-2 flex w-64 pl-6 mr-5 items-center text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]  ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
         <button mat-button type="button" >
             <mat-icon>add</mat-icon>
         </button>
@@ -43,7 +41,7 @@
             Качи профилна снимка
         </span>
     </div>
-    <div (click)="updateUser()" class="flex pl-5 pr-5 items-center text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]  ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
+    <div (click)="updateUser()" class="flex cursor-pointer pl-5 pr-5 items-center text-sm rounded-full font-bold text-white border-2 border-[#007bff] bg-[#007bff]  ease-in-out duration-300 hover:bg-transparent hover:text-[#007bff]">
         <span class="font-bold">
             Запази промените
         </span>

@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.router.navigate(['/user']);
     this.userService.profileOpened.next(true);
     this.userService.getCurrentUserByUsername().subscribe((user: User) => {
-      this.profileImageUrl = user.profileImageUrl;
+      this.profileImageUrl = user.image;
     });
   }
 }

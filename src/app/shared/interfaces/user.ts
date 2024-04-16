@@ -8,5 +8,5 @@ export interface User {
     phoneNumber: string;
     location: string;
     role: string;
-    profileImageUrl: string;
+    image: string;
 }

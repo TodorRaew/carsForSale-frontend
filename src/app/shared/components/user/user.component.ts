@@ -13,30 +13,40 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class UserComponent implements OnInit {
   viewUserFormGroup: FormGroup = new FormGroup({});
   user: User | undefined;
+  imageUrl: string = '';
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    debugger
     this.viewUserFormGroup = new FormGroup({
       username: new FormControl({ value: '', disabled: true }, []),
       email: new FormControl({ value: '', disabled: true }, []),
       phoneNumber: new FormControl({ value: '', disabled: true }, []),
       location: new FormControl({ value: '', disabled: true }, []),
       role: new FormControl({ value: '', disabled: true }, []),
-      profileImageUrl: new FormControl({ value: '', disabled: true }, [])
     });
-    
+    debugger
     this.userService.getCurrentUserByUsername()
-      .subscribe((user) => {
-        this.viewUserFormGroup.setValue({
-          username: user.username,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          location: user.location,
-          role: user.role,
-          profileImageUrl: user.profileImageUrl
-        })
-      });
+      .subscribe({
+        next: (user: User) => {
+          debugger
+          this.user = user;
+          this.viewUserFormGroup.get('username')?.setValue(user.username);
+          this.viewUserFormGroup.get('email')?.setValue(user.email);
+          this.viewUserFormGroup.get('phoneNumber')?.setValue(user.phoneNumber);
+          this.viewUserFormGroup.get('location')?.setValue(user.location);
+          this.viewUserFormGroup.get('role')?.setValue(user.role);
+
+          if (user.image) {
+            this.imageUrl = user.image;
+          }
+        },
+        error: (error: Error) => {
+          debugger
+          console.log(error);
+        }
+      })
   }
 
   openCloudinaryUploader() {
@@ -53,7 +63,7 @@ export class UserComponent implements OnInit {
       debugger
       if (!error && result && result.event === "success") {
         debugger
-        this.viewUserFormGroup.get('profileImageUrl')?.setValue(result.info.secure_url);
+        this.imageUrl = result.info.secure_url;
       }
     });
   }
@@ -61,7 +71,13 @@ export class UserComponent implements OnInit {
   updateUser() {
     debugger
     if (this.user) {
-      this.userService.updateUser(this.user?.username, this.viewUserFormGroup.get('profileImageUrl')?.value);
+      this.userService.updateUser(this.user.username, this.imageUrl);
+      this.refresh();
     }
+  }
+
+  private refresh() {
+    debugger
+    this.ngOnInit();
   }
 }
