@@ -35,13 +35,11 @@ export class MyAdvertisementsComponent implements OnInit {
 
   private refresh() {
     debugger
-    if (this.user) {
-      this.advertisementService.getAllMyAdvertisements(this.user?.username)
-        .subscribe((advertisements) => {
-          debugger
-          this.dataSource = new MatTableDataSource(advertisements);
-        });
-    }
+    this.advertisementService.getAllAdvertisements()
+      .subscribe((advertisements) => {
+        debugger
+        this.dataSource = new MatTableDataSource(advertisements);
+      });
   }
 
   applyFilter(event: Event) {
@@ -106,11 +104,22 @@ export class MyAdvertisementsComponent implements OnInit {
 
   onEditAdvertisementHandler(advertisement: AdvertisementView) {
     debugger
-    this._dialog.open(DioalogComponent, {
+    const dialog = this._dialog.open(DioalogComponent, {
       data: {
         advertisement: advertisement,
         action: Actions.EDIT
       }
+    });
+    debugger
+
+    dialog.componentInstance.updateConfirmed.subscribe(() => {
+      debugger
+      this.openSnackBar('Advertisement updated successfully', 'Close');
+      this.refresh();
+      dialog.close();
+    }, (error) => {
+      debugger
+      this.openSnackBar('Error updating advertisement', 'Close');
     });
   }
 

@@ -1,17 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { UserService } from './user/user.service';
 import { AdvertisementView } from '../shared/interfaces/advertisement.view';
 import { Advertisement } from '../shared/interfaces/advertisement';
-import { Observable, forkJoin } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { AdvertisementOutView } from '../shared/interfaces/advertisementOutView';
 import { User } from '../shared/interfaces/user';
-import { MakeService } from './make.service';
-import { FuelTypeService } from './fuel-type.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +15,8 @@ export class AdvertisementService {
   resourceUrl = `api/v1`
   user: User | undefined;
 
-  constructor(private http: HttpClient, private cookie: CookieService, private userService: UserService,
-    private makeService: MakeService,
-    private fuelTypeService: FuelTypeService) { }
+  constructor(private http: HttpClient
+    ) { }
 
   addAdvertisement(sellerId: number, form: FormGroup): Observable<Advertisement> {
     debugger
@@ -57,46 +50,33 @@ export class AdvertisementService {
       })
   }
 
-  updateAdvertisement(sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
-    const makeName = _form.controls['makeName'].value;
-    const fuelTypeName = _form.controls['fuelTypeName'].value;
-    const modelName = _form.controls['modelName'].value;
-
-    let makeId: number;
-    let fuelTypeId: number;
+  updateAdvertisement(_makeId: number | undefined, _fuelTypeId: number | undefined, sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
     debugger
-    return forkJoin([
-      this.makeService.getByName(makeName, modelName),
-      this.fuelTypeService.getByName(fuelTypeName)
-    ]).pipe(
-      switchMap(([make, fuelType]) => {
-        debugger
-        makeId = make.id;
-        fuelTypeId = fuelType.id;
+    const userId = Number(sellerId);
+    const phoneNumber = _form.value.phone;
+    const makeId = Number(_makeId);
+    const fuelTypeId = Number(_fuelTypeId);
+    const color = _form.value.color;
+    const power = _form.value.power;
+    const yearOfManufacture = _form.value.yearOfManufacture;
+    const price = _form.value.price;
+    const dateOfCreation = _form.value.dateOfCreation;
+    const imageUrl = _form.value.imageUrl;
+    debugger
 
-        debugger
-        const userId = Number(sellerId);
-        const phoneNumber = _form.value.phone;
-        const color = _form.value.color;
-        const power = _form.value.power;
-        const yearOfManufacture = _form.value.yearOfManufacture;
-        const price = _form.value.price;
-        const dateOfCreation = _form.value.dateOfCreation;
-
-        debugger
-        return this.http.put<Advertisement>(`${this.URL}/${this.resourceUrl}/${_id}`, {
-          userId,
-          phoneNumber,
-          makeId,
-          fuelTypeId,
-          color,
-          power,
-          yearOfManufacture,
-          price,
-          dateOfCreation
-        });
+    return this.http
+      .put<Advertisement>(`${this.URL}/${this.resourceUrl}/${_id}`, {
+        userId,
+        phoneNumber,
+        makeId,
+        fuelTypeId,
+        color,
+        power,
+        yearOfManufacture,
+        price,
+        dateOfCreation,
+        imageUrl
       })
-    );
   }
 
   getAllAdvertisements() {

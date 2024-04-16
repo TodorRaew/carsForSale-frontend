@@ -116,11 +116,22 @@ export class HomeComponent implements OnInit {
 
   onEditAdvertisementHandler(advertisement: AdvertisementView) {
     debugger
-    this._dialog.open(DioalogComponent, {
+    const dialog = this._dialog.open(DioalogComponent, {
       data: {
         advertisement: advertisement,
         action: Actions.EDIT
       }
+    });
+    debugger
+
+    dialog.componentInstance.updateConfirmed.subscribe(() => {
+      debugger
+      this.openSnackBar('Advertisement updated successfully', 'Close');
+      this.refresh();
+      dialog.close();
+    }, (error) => {
+      debugger
+      this.openSnackBar('Error updating advertisement', 'Close');
     });
   }
 

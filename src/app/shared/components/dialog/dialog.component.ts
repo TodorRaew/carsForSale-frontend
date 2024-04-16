@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -11,6 +11,7 @@ import { MakeService } from 'src/app/services/make.service';
 import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { image } from '@cloudinary/url-gen/qualifiers/source';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-dioalog',
@@ -24,6 +25,10 @@ export class DioalogComponent implements OnInit {
   sellerId: number = 0;
   makes: MakeDto[] = []
   fuelTypes: FuelTypeDto[] = [];
+  dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
+  @Output() updateConfirmed: EventEmitter<void> = new EventEmitter<void>();
+
+
 
   visibilityDialogFormGroup = new FormGroup({
     sellerName: new FormControl({ value: '', disabled: true }, []),
@@ -49,14 +54,14 @@ export class DioalogComponent implements OnInit {
 
   ngOnInit(): void {
     this.makeService.getAllMakes()
-    .subscribe((makes) => {
-      this.makes = makes;
-    });
+      .subscribe((makes) => {
+        this.makes = makes;
+      });
 
-  this.fuelTypeService.getAllFuelTypes()
-    .subscribe((fuelTypes) => {
-      this.fuelTypes = fuelTypes;
-    });
+    this.fuelTypeService.getAllFuelTypes()
+      .subscribe((fuelTypes) => {
+        this.fuelTypes = fuelTypes;
+      });
 
     if (this.data.action === Actions.EDIT) {
       this.title = 'Редакция на обява'
@@ -79,9 +84,7 @@ export class DioalogComponent implements OnInit {
       imageUrl: this.data.advertisement.image
     });
 
-    this.userService.getCurrentUserByUsername().subscribe((user) => {
-      this.sellerId = user.id
-    });
+    this.sellerId = this.data.advertisement.createdBy;
   }
 
   onNoClick(): void {
@@ -94,14 +97,17 @@ export class DioalogComponent implements OnInit {
     this.onNoClick();
   }
 
-  updateRecord() {
-    
+  updateRecord(): void {
+
+    let makeId = this.makes.find(m => m.name === this.visibilityDialogFormGroup.value.makeName && m.modelName === this.visibilityDialogFormGroup.value.modelName)?.id;
+    let fuelTypeId = this.fuelTypes.find(f => f.name === this.visibilityDialogFormGroup.value.fuelTypeName)?.id;
+
     debugger
-     this.advertisementService.updateAdvertisement(this.sellerId, this.data.advertisement.id, this.visibilityDialogFormGroup).subscribe((advertisement) => {
-      console.log(advertisement);
-      
+    this.advertisementService.updateAdvertisement(makeId, fuelTypeId, this.sellerId, this.data.advertisement.id, this.visibilityDialogFormGroup)
+      .subscribe(() => {
         debugger
-     });
+        this.updateConfirmed.emit();
+      });
   }
 
   openSnackBar(message: string, action: string) {
