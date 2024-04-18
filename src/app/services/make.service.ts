@@ -15,7 +15,7 @@ export class MakeService {
 
   getAllMakes() {
     debugger
-    return this.http.get<MakeDto[]>(`${this.URL}/make`, {
+    return this.http.get<MakeDto[]>(`${this.URL}/brand`, {
       headers: { Authorization: this.cookie.get('Authorization') }
     })
   }

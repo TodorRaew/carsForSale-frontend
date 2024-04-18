@@ -16,22 +16,23 @@
             <mat-form-field>
                 <mat-label>Марка</mat-label>
                 <mat-select class="w-full" (selectionChange)="onMakeSelectionChange($event)" formControlName="makeName">
-                    <mat-option *ngFor="let make of makes" [value]="make.name">{{ make.name}}</mat-option>
+                    <mat-option *ngFor="let make of makes" [value]="make.name">{{ make.name }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Модел</mat-label>
                 <mat-select class="w-full" formControlName="modelName">
-                    <mat-option *ngFor="let model of models" [value]="model">{{ model}}</mat-option>
+                    <mat-option *ngFor="let model of models" [value]="model.name">{{ model.name }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Вид гориво</mat-label>
                 <mat-select class="w-full" formControlName="fuelTypeName">
-                    <mat-option *ngFor="let fuelType of fuelTypes" [value]="fuelType.name">{{ fuelType.name}}</mat-option>
-                  </mat-select>
+                    <mat-option *ngFor="let fuelType of fuelTypes" [value]="fuelType.name">{{
+                        fuelType.name}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field>
@@ -56,8 +57,7 @@
 
             <div class="px-5 text-[#9B9B9B] cursor-not-allowed">
                 <label>Снимка</label>
-                <img [src]="visibilityDialogFormGroup.get('imageUrl')?.value"
-                    alt="car" class="w-64 h-64">
+                <img [src]="visibilityDialogFormGroup.get('imageUrl')?.value" alt="car" class="w-64 h-64">
             </div>
         </div>
     </form>

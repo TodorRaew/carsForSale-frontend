@@ -26,6 +26,7 @@ export class AdvertisementService {
     const userId = Number(sellerId);
     const phoneNumber = form.value.phoneNumber;
     const makeId = Number(form.value.makeId);
+    const modelId = Number(form.value.modelId);
     const fuelTypeId = Number(form.value.fuelTypeId);
     const color = form.value.color;
     const power = form.value.power;
@@ -40,6 +41,7 @@ export class AdvertisementService {
         userId,
         phoneNumber,
         makeId,
+        modelId,
         fuelTypeId,
         color,
         power,
@@ -50,11 +52,12 @@ export class AdvertisementService {
       })
   }
 
-  updateAdvertisement(_makeId: number | undefined, _fuelTypeId: number | undefined, sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
+  updateAdvertisement(_makeId: number | undefined, _modelId: number | undefined, _fuelTypeId: number | undefined, sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
     debugger
     const userId = Number(sellerId);
     const phoneNumber = _form.value.phone;
     const makeId = Number(_makeId);
+    const modelId = Number(_modelId);
     const fuelTypeId = Number(_fuelTypeId);
     const color = _form.value.color;
     const power = _form.value.power;
@@ -69,6 +72,7 @@ export class AdvertisementService {
         userId,
         phoneNumber,
         makeId,
+        modelId,
         fuelTypeId,
         color,
         power,

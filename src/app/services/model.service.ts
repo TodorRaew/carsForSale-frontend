@@ -16,10 +16,24 @@ export class ModelService {
 
   getAllModelsByMakeName(makeName: string) {
     debugger
-    return this.http.get<string[]>(`${this.URL}/${this.resourceUrl}/allModelsByMake`, {
+    return this.http.get<Model[]>(`${this.URL}/${this.resourceUrl}/allModelsByMake`, {
       params: {
         makeName
       }
     });
+  }
+
+  getAllModelsByMakeId(makeId: number) {
+    debugger
+    return this.http.get<Model[]>(`${this.URL}/${this.resourceUrl}/allModelsByMakeId`, {
+      params: {
+        makeId: makeId.toString()
+      }
+    });
+  }
+
+  getAllModels() {
+    debugger
+    return this.http.get<Model[]>(`${this.URL}/allModels`);
   }
 }

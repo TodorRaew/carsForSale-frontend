@@ -15,9 +15,16 @@
       </mat-form-field>
 
       <mat-form-field class="p-1">
-        <mat-label>Марка и модел</mat-label>
-        <mat-select class="w-full" formControlName="makeId">
-          <mat-option *ngFor="let make of makes" [value]="make.id">{{ make.name}} {{make.modelName}}</mat-option>
+        <mat-label>Марка</mat-label>
+        <mat-select class="w-full" (selectionChange)="onMakeSelectionChange($event)" formControlName="makeId">
+          <mat-option *ngFor="let make of makes" [value]="make.id">{{ make.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-1">
+        <mat-label>Модел</mat-label>
+        <mat-select class="w-full" formControlName="modelId">
+          <mat-option *ngFor="let model of models" [value]="model.id">{{model.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 

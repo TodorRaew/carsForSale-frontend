@@ -18,7 +18,7 @@ import { DialogAnimationsComponent } from '../dialog-animations/dialog-animation
 })
 export class MyAdvertisementsComponent implements OnInit {
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
-  displayedColumns: string[] = ['sellerName', 'sellerPhoneNumber', 'makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
+  displayedColumns: string[] = ['makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   user: User | undefined;
 
   constructor(private _dialog: MatDialog,

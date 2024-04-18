@@ -10,6 +10,9 @@ import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Model } from '../../interfaces/model';
+import { ModelService } from 'src/app/services/model.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-form',
@@ -22,6 +25,7 @@ export class FormComponent implements OnInit, OnDestroy {
   @Output() addedAdvs: EventEmitter<void> = new EventEmitter<void>();
 
   makes: MakeDto[] = []
+  models: Model[] = [];
   fuelTypes: FuelTypeDto[] = [];
   sellerId: number = 0;
 
@@ -32,13 +36,15 @@ export class FormComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<FormComponent>,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private modelService: ModelService) {
   }
 
   formData = new FormGroup({
     sellerName: new FormControl({ value: this.userService.getCurrentUserName(), disabled: true }, [Validators.required]),
     phoneNumber: new FormControl("", [Validators.required]),
     makeId: new FormControl("", [Validators.required]),
+    modelId: new FormControl("", [Validators.required]),
     fuelTypeId: new FormControl("", [Validators.required]),
     color: new FormControl("", [Validators.required]),
     power: new FormControl("", [Validators.required]),
@@ -85,6 +91,25 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.userService.tokenChanged.unsubscribe();
   }
+
+  onMakeSelectionChange(event: MatSelectChange) {
+    debugger
+    const selectedMake = event.value;
+
+    if (typeof selectedMake === 'number') {
+      this.modelService.getAllModelsByMakeId(selectedMake).subscribe((models) => {
+        debugger
+        this.models = models;
+      });
+    }
+    else {
+      this.modelService.getAllModelsByMakeName(selectedMake).subscribe((models) => {
+        debugger
+        this.models = models;
+      });
+    }
+  }
+
 
   openCloudinaryUploader(): void {
     debugger
