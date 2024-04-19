@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { FormComponent } from '../form/form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-myAdvretisements',
@@ -21,16 +22,17 @@ export class MyAdvertisementsComponent implements OnInit {
   displayedColumns: string[] = ['makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   user: User | undefined;
   message: string = '';
+  countRecords: number = 0;
 
   constructor(private _dialog: MatDialog,
     private advertisementService: AdvertisementService,
     private userService: UserService,
     private _snackBar: MatSnackBar,
-
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.message = 'МОИТЕ ОБЯВИ'
+    this.message = this.activatedRoute.snapshot.data['title'];
 
     debugger
     this.loadUserAndRefresh();
@@ -131,9 +133,10 @@ export class MyAdvertisementsComponent implements OnInit {
     const username = this.userService.getCurrentUserName() as string;
 
     this.advertisementService.getAllMyAdvertisementsWithPagination(username, 0, 5).subscribe({
-      next: (advertisements) => {
+      next: (advertisementView) => {
         debugger
-        this.dataSource = new MatTableDataSource(advertisements);
+        this.dataSource = new MatTableDataSource(advertisementView.advertisements);
+        this.countRecords = advertisementView.countRecords;
       }
     });
   }

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../interfaces/user';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -17,10 +18,13 @@ export class UserComponent implements OnInit {
   message: string = '';
 
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
-    this.message = 'ПРЕГЛЕД НА ПРОФИЛ'
+    this.message = this.activatedRoute.snapshot.data['title'];
+    
     debugger
     this.viewUserFormGroup = new FormGroup({
       username: new FormControl({ value: '', disabled: true }, []),

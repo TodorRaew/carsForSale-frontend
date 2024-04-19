@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { AdvertisementView } from '../shared/interfaces/advertisement.view';
 import { Advertisement } from '../shared/interfaces/advertisement';
 import { Observable } from 'rxjs';
-import { AdvertisementOutView } from '../shared/interfaces/advertisementOutView';
+import { AdvertisementOutView } from '../shared/interfaces/advertisement.outView';
 import { User } from '../shared/interfaces/user';
 
 @Injectable({
@@ -106,10 +106,10 @@ export class AdvertisementService {
     })
   }
 
-  getAllMyAdvertisementsWithPagination(user: string, pageIndex: number, pageSize: number): Observable<AdvertisementView[]> {
+  getAllMyAdvertisementsWithPagination(user: string, pageIndex: number, pageSize: number): Observable<AdvertisementOutView> {
     let param = new HttpParams().set('username', user).set('pageIndex', pageIndex).set('pageSize', pageSize);
     debugger
-    return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/myAdvertisementsWithPagination`, {
+    return this.http.get<AdvertisementOutView>(`${this.URL}/${this.resourceUrl}/myAdvertisementsWithPagination`, {
       params: param
     });
   }

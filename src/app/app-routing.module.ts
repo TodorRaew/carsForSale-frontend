@@ -13,16 +13,25 @@ const routes: Routes = [
   { 
     path: 'about', 
     component: AboutComponent,
+    data: { 
+      title: 'ЗА НАС' 
+    }
   },
   { 
     path: 'myAdvertisements', 
     component: MyAdvertisementsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { 
+      title: 'МОИТЕ ОБЯВИ' 
+    }
   },
   { 
     path: 'home', 
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { 
+      title: 'ВСИЧКИ ОБЯВИ' 
+    }
   },
   { 
     path: 'register', 
@@ -39,7 +48,10 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { 
+      title: 'ПРЕГЛЕД НА ПРОФИЛА' 
+    }
   }
 ];
 

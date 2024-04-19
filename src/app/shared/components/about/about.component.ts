@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-about',
@@ -9,9 +10,9 @@ export class AboutComponent  implements OnInit {
   message: string = '';
 
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.message = 'ЗА НАС'
+    this.message = this.activatedRoute.snapshot.data['title'];
   }
 }

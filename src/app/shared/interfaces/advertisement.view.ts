@@ -11,5 +11,6 @@ export interface AdvertisementView {
     price: string,
     dateOfCreation: Date,
     image: string,
-    createdBy: number
+    createdBy: number,
+    countRecords: number
 }

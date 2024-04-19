@@ -12,7 +12,7 @@ import { Actions } from '../../interfaces/enums';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../interfaces/user';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -38,14 +38,15 @@ export class HomeComponent implements OnInit {
     private advertisementService: AdvertisementService,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute
   ) {
 
   }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.message = 'ВСИЧКИ ОБЯВИ'
+    this.message = this.activatedRoute.snapshot.data['title'];
     debugger
     this.refresh();
     this.loadUser();
