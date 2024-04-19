@@ -1,6 +1,5 @@
-declare var cloudinary: any;
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +12,8 @@ import { Actions } from '../../interfaces/enums';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../interfaces/user';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +28,10 @@ export class HomeComponent implements OnInit {
   isAuthenticated: boolean = false;
   canDelete: boolean = true;
   user: User | undefined;
+  message: string = '';
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  currentPage: number = 0;
 
 
   constructor(
@@ -40,6 +44,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.message = 'ВСИЧКИ ОБЯВИ'
     debugger
     this.refresh();
     this.loadUser();
@@ -47,14 +53,14 @@ export class HomeComponent implements OnInit {
 
   private refresh() {
     debugger
-    this.advertisementService.getAllAdvertisements()
+    this.advertisementService.getAllAdvertisementsWithPagination(0, 5)
       .subscribe((advertisements) => {
-        debugger
         this.dataSource = new MatTableDataSource(advertisements);
       });
   }
 
   applyFilter(event: Event) {
+    debugger
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -91,7 +97,7 @@ export class HomeComponent implements OnInit {
       .subscribe(() => {
         this.openSnackBar('Advertisement deleted successfully', 'Close');
         this.refresh();
-      }, (error) => {
+      }, () => {
         this.openSnackBar('Error deleting advertisement', 'Close');
       });
   }
@@ -109,7 +115,7 @@ export class HomeComponent implements OnInit {
       this.openSnackBar('Advertisement added successfully', 'Close');
       this.refresh();
       dialog.close();
-    }, (error) => {
+    }, () => {
       this.openSnackBar('Error adding advertisement', 'Close');
     });
   }
@@ -129,7 +135,7 @@ export class HomeComponent implements OnInit {
       this.openSnackBar('Advertisement updated successfully', 'Close');
       this.refresh();
       dialog.close();
-    }, (error) => {
+    }, () => {
       debugger
       this.openSnackBar('Error updating advertisement', 'Close');
     });
@@ -142,5 +148,14 @@ export class HomeComponent implements OnInit {
       this.user = user;
     });
 
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.pageIndex + 1;
+
+    this.advertisementService.getAllAdvertisementsWithPagination(event.pageIndex, event.pageSize)
+      .subscribe((advertisements) => {
+        this.dataSource = new MatTableDataSource(advertisements);
+      });
   }
 }

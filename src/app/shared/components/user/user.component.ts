@@ -14,10 +14,13 @@ export class UserComponent implements OnInit {
   viewUserFormGroup: FormGroup = new FormGroup({});
   user: User | undefined;
   imageUrl: string = '';
+  message: string = '';
+
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.message = 'ПРЕГЛЕД НА ПРОФИЛ'
     debugger
     this.viewUserFormGroup = new FormGroup({
       username: new FormControl({ value: '', disabled: true }, []),

@@ -53,7 +53,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
     FormsModule,
     MatSnackBarModule,
     MatTooltipModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
   ],
   exports: [MyAdvertisementsComponent, AboutComponent, HomeComponent]
 })

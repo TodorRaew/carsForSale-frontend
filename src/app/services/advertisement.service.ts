@@ -16,7 +16,7 @@ export class AdvertisementService {
   user: User | undefined;
 
   constructor(private http: HttpClient
-    ) { }
+  ) { }
 
   addAdvertisement(sellerId: number, form: FormGroup): Observable<Advertisement> {
     debugger
@@ -88,6 +88,14 @@ export class AdvertisementService {
     return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisements`);
   }
 
+  getAllAdvertisementsWithPagination(pageIndex: number, pageSize: number): Observable<AdvertisementView[]> {
+    let param = new HttpParams().set('pageIndex', pageIndex).set('pageSize', pageSize);
+    debugger
+    return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisementsWithPagination`, {
+      params: param
+    });
+  }
+
   getAllMyAdvertisements(user: string) {
 
     let param = new HttpParams().set('username', user);
@@ -96,6 +104,14 @@ export class AdvertisementService {
     return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/myAdvertisements`, {
       params: param
     })
+  }
+
+  getAllMyAdvertisementsWithPagination(user: string, pageIndex: number, pageSize: number): Observable<AdvertisementView[]> {
+    let param = new HttpParams().set('username', user).set('pageIndex', pageIndex).set('pageSize', pageSize);
+    debugger
+    return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/myAdvertisementsWithPagination`, {
+      params: param
+    });
   }
 
   deleteAdvertisement(id: number) {

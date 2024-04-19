@@ -20,6 +20,7 @@ export class MyAdvertisementsComponent implements OnInit {
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   displayedColumns: string[] = ['makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   user: User | undefined;
+  message: string = '';
 
   constructor(private _dialog: MatDialog,
     private advertisementService: AdvertisementService,
@@ -29,6 +30,8 @@ export class MyAdvertisementsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.message = 'МОИТЕ ОБЯВИ'
+
     debugger
     this.loadUserAndRefresh();
   }
@@ -127,12 +130,19 @@ export class MyAdvertisementsComponent implements OnInit {
     debugger
     const username = this.userService.getCurrentUserName() as string;
 
-    this.advertisementService.getAllMyAdvertisements(username).subscribe({
+    this.advertisementService.getAllMyAdvertisementsWithPagination(username, 0, 5).subscribe({
       next: (advertisements) => {
         debugger
         this.dataSource = new MatTableDataSource(advertisements);
       }
     });
+  }
+
+  onPageChange(event: any) {
+    this.advertisementService.getAllAdvertisementsWithPagination(event.pageIndex, event.pageSize)
+      .subscribe((advertisements) => {
+        this.dataSource = new MatTableDataSource(advertisements);
+      });
   }
 }
 

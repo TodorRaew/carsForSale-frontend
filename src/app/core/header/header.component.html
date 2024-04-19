@@ -12,8 +12,9 @@
         </button>
       </div>
       <div *ngIf="isAuthenticated" class="butonsContainer cursor-not-allowed md:cursor-auto">
-        <div class="profileContainer py-4 cursor-pointer flex items-center" (click)="profileOpened = !profileOpened">
-          <span class="mr-1 font-bold">
+        <div class="profileContainer w-64 py-4 cursor-pointer flex items-center"
+          (click)="profileOpened = !profileOpened">
+          <span class="ml-10 mr-4 font-bold">
             Добре дошли, {{user?.username}}!
           </span>
           <div class="flex items-center">
@@ -26,7 +27,7 @@
         </div>
         <div *ngIf="!profileOpened" class="mr-5">
           <div
-            class="absolute justify-start mr-5 px-2 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
+            class="absolute justify-start ml-10 mr-5 px-2 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
             <ul class="space-y-3 dark:text-white">
               <li class="font-medium cursor-auto">
                 <a [routerLink]="['/user']" (click)="viewUser()"
@@ -63,7 +64,8 @@
     </div>
     <ul id="collapseMenu" class='lg:!flex lg:space-x-5 max-lg:space-y-2 max-lg:hidden max-lg:py-4 max-lg:w-full'>
       <li class='max-lg:border-b max-lg:py-2 px-3 max-lg:rounded'>
-        <a [routerLink]="['/about']" class='lg:hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]'>За нас
+        <a [routerLink]="['/about']" class='lg:hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]'>За
+          нас
         </a>
       </li>
       <div *ngIf="isAuthenticated">
