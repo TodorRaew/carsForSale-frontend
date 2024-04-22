@@ -88,10 +88,10 @@ export class AdvertisementService {
     return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisements`);
   }
 
-  getAllAdvertisementsWithPagination(pageIndex: number, pageSize: number): Observable<AdvertisementView[]> {
+  getAllAdvertisementsWithPagination(pageIndex: number, pageSize: number): Observable<AdvertisementOutView> {
     let param = new HttpParams().set('pageIndex', pageIndex).set('pageSize', pageSize);
     debugger
-    return this.http.get<AdvertisementView[]>(`${this.URL}/${this.resourceUrl}/advertisementsWithPagination`, {
+    return this.http.get<AdvertisementOutView>(`${this.URL}/${this.resourceUrl}/advertisementsWithPagination`, {
       params: param
     });
   }

@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   canDelete: boolean = true;
   user: User | undefined;
   message: string = '';
+  countRecords: number = 0;
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   currentPage: number = 0;
@@ -55,8 +57,11 @@ export class HomeComponent implements OnInit {
   private refresh() {
     debugger
     this.advertisementService.getAllAdvertisementsWithPagination(0, 5)
-      .subscribe((advertisements) => {
-        this.dataSource = new MatTableDataSource(advertisements);
+      .subscribe((advertisementView) => {
+        debugger
+        this.dataSource = new MatTableDataSource(advertisementView.advertisements);
+        this.countRecords = advertisementView.countRecords;
+
       });
   }
 
@@ -156,7 +161,7 @@ export class HomeComponent implements OnInit {
 
     this.advertisementService.getAllAdvertisementsWithPagination(event.pageIndex, event.pageSize)
       .subscribe((advertisements) => {
-        this.dataSource = new MatTableDataSource(advertisements);
+        this.dataSource = new MatTableDataSource(advertisements.advertisements);
       });
   }
 }

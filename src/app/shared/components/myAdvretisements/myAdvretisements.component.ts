@@ -144,7 +144,7 @@ export class MyAdvertisementsComponent implements OnInit {
   onPageChange(event: any) {
     this.advertisementService.getAllAdvertisementsWithPagination(event.pageIndex, event.pageSize)
       .subscribe((advertisements) => {
-        this.dataSource = new MatTableDataSource(advertisements);
+        this.dataSource = new MatTableDataSource(advertisements.advertisements);
       });
   }
 }
