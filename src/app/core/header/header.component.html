@@ -12,7 +12,7 @@
         </button>
       </div>
       <div *ngIf="isAuthenticated" class="butonsContainer cursor-not-allowed md:cursor-auto">
-        <div class="profileContainer w-64 py-4 cursor-pointer flex items-center"
+        <div class="profileContainer w-auto py-4 cursor-pointer flex items-center"
           (click)="profileOpened = !profileOpened">
           <span class="ml-10 mr-4 font-bold">
             Добре дошли, {{user?.username}}!
