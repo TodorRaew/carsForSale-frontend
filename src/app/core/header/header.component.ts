@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
+import { LogoutDialogAnimationComponent } from 'src/app/shared/components/logout-dialog-animation/logout-dialog-animation.component';
 import { User } from 'src/app/shared/interfaces/user';
 
 @Component({
@@ -15,7 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profileImageUrl?: string;
   user: User | undefined;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private _dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     const user = this.userService.getCurrentUserByUsername().subscribe((user: User) => {
@@ -37,10 +40,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout(): void {
+
+    const dialog = this._dialog.open(LogoutDialogAnimationComponent, {
+      width: '250px',
+      data: { username: this.username }
+    });
     debugger
-    this.isAuthenticated = false;
-    this.userService.logout();
-    this.userService.profileOpened.next(true);
+
+    dialog.componentInstance.logoutConfirmed.subscribe(() => {
+      this.isAuthenticated = false;
+      this.userService.logout();
+      this.userService.profileOpened.next(true);
+      this.router.navigate(['/login']);
+    });
   }
 
   viewUser(): void {

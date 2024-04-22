@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MapComponent } from './components/map/map.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { LogoutDialogAnimationComponent } from './components/logout-dialog-animation/logout-dialog-animation.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
     FormComponent,
     UserComponent,
     MapComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    LogoutDialogAnimationComponent
   ],
   imports: [
     CommonModule,
