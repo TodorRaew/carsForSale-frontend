@@ -24,6 +24,9 @@ export class RegisterComponent {
     ) { }
 
   onSubmitHandler(): void {
+    if (this.registerForm.invalid) {
+      return;
+    }
     const form = this.registerForm;
 
     if (form.value.password !== form.value.repassword) {
