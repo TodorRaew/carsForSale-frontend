@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../interfaces/user';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -16,6 +17,7 @@ export class UserComponent implements OnInit {
   user: User | undefined;
   imageUrl: string = '';
   message: string = '';
+  subscriptions: Subscription[] = [];
 
 
   constructor(private userService: UserService,
@@ -24,7 +26,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = this.activatedRoute.snapshot.data['title'];
-    
+
     debugger
     this.viewUserFormGroup = new FormGroup({
       username: new FormControl({ value: '', disabled: true }, []),
@@ -34,7 +36,7 @@ export class UserComponent implements OnInit {
       role: new FormControl({ value: '', disabled: true }, []),
     });
     debugger
-    this.userService.getCurrentUserByUsername()
+    const sub = this.userService.getCurrentUserByUsername()
       .subscribe({
         next: (user: User) => {
           debugger
@@ -54,6 +56,8 @@ export class UserComponent implements OnInit {
           console.log(error);
         }
       })
+
+    this.subscriptions.push(sub);
   }
 
   openCloudinaryUploader() {
@@ -85,7 +89,7 @@ export class UserComponent implements OnInit {
 
   private refresh() {
     debugger
-    this.userService.getCurrentUserByUsername()
+    const sub = this.userService.getCurrentUserByUsername()
       .subscribe({
         next: (user: User) => {
           debugger
@@ -105,5 +109,7 @@ export class UserComponent implements OnInit {
           console.log(error);
         }
       })
+
+    this.subscriptions.push(sub);
   }
 }

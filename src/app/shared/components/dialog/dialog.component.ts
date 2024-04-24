@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -15,13 +15,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSelectChange } from '@angular/material/select';
 import { ModelService } from 'src/app/services/model.service';
 import { Model } from '../../interfaces/model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dioalog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css'],
 })
-export class DioalogComponent implements OnInit {
+export class DioalogComponent implements OnInit, OnDestroy {
   title: string = 'Преглед на обява';
   buttonTitle: string = 'Затвори';
   action: string = 'view';
@@ -30,6 +31,8 @@ export class DioalogComponent implements OnInit {
   models: Model[] = [];
   fuelTypes: FuelTypeDto[] = [];
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
+  subscriptions: Subscription[] = [];
+
   @Output() updateConfirmed: EventEmitter<void> = new EventEmitter<void>();
 
 
@@ -59,15 +62,15 @@ export class DioalogComponent implements OnInit {
 
   ngOnInit(): void {
     debugger
-    this.makeService.getAllMakes()
+    const makesSub = this.makeService.getAllMakes()
       .subscribe((makes) => {
         debugger
         this.makes = makes;
       });
 
-      debugger
+    debugger
     // load filtered models by make
-    this.modelService.getAllModelsByMakeName(this.data.advertisement.makeName)
+    const modelsSub = this.modelService.getAllModelsByMakeName(this.data.advertisement.makeName)
       .subscribe((models) => {
         debugger
         this.models = models;
@@ -75,7 +78,7 @@ export class DioalogComponent implements OnInit {
 
 
     debugger
-    this.fuelTypeService.getAllFuelTypes()
+    const fuelTypesSub = this.fuelTypeService.getAllFuelTypes()
       .subscribe((fuelTypes) => {
         debugger
         this.fuelTypes = fuelTypes;
@@ -104,6 +107,7 @@ export class DioalogComponent implements OnInit {
     });
 
     this.sellerId = this.data.advertisement.createdBy;
+    this.subscriptions.push(makesSub, modelsSub, fuelTypesSub);
   }
 
   onNoClick(): void {
@@ -126,26 +130,35 @@ export class DioalogComponent implements OnInit {
     let fuelTypeId = this.fuelTypes.find(f => f.name === this.visibilityDialogFormGroup.value.fuelTypeName)?.id;
 
     debugger
-    this.advertisementService.updateAdvertisement(makeId, modelId, fuelTypeId, this.sellerId, this.data.advertisement.id, this.visibilityDialogFormGroup)
+    const advSub = this.advertisementService.updateAdvertisement(makeId, modelId, fuelTypeId, this.sellerId, this.data.advertisement.id, this.visibilityDialogFormGroup)
       .subscribe(() => {
         debugger
         this.updateConfirmed.emit();
       });
+
+    this.subscriptions.push(advSub);
   }
 
   onMakeSelectionChange(event: MatSelectChange) {
     debugger
     const selectedMake = event.value;
     // Извикайте вашата услуга за връщане на моделите в зависимост от избраната марка
-    this.modelService.getAllModelsByMakeName(selectedMake).subscribe((models) => {
+    const modelSub = this.modelService.getAllModelsByMakeName(selectedMake).subscribe((models) => {
       debugger
       this.models = models;
     });
+
+    this.subscriptions.push(modelSub);
   }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 3000,
     });
+  }
+
+  ngOnDestroy(): void {
+    debugger
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

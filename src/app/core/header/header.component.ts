@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user/user.service';
 import { LogoutDialogAnimationComponent } from 'src/app/shared/components/logout-dialog-animation/logout-dialog-animation.component';
 import { User } from 'src/app/shared/interfaces/user';
@@ -16,27 +17,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
   username?: string;
   profileImageUrl?: string;
   user: User | undefined;
+  subscriptions: Subscription[] = [];
 
   constructor(private userService: UserService, private router: Router, private _dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    const user = this.userService.getCurrentUserByUsername().subscribe((user: User) => {
+    const userSub = this.userService.getCurrentUserByUsername().subscribe((user: User) => {
       this.user = user;
     });
 
-    this.userService.tokenChanged.subscribe((response) => {
+    const tokenSub = this.userService.tokenChanged.subscribe((response) => {
       this.isAuthenticated = response
     });
 
-    this.userService.profileOpened.subscribe((profileOpened: boolean) => {
+    const profileSub = this.userService.profileOpened.subscribe((profileOpened: boolean) => {
       this.profileOpened = profileOpened;
     })
+
+    this.subscriptions.push(userSub, tokenSub, profileSub);
   }
 
   ngOnDestroy(): void {
-    this.userService.tokenChanged.unsubscribe();
-    this.userService.profileOpened.unsubscribe();
+    debugger
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   onLogout(): void {
@@ -47,20 +51,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     debugger
 
-    dialog.componentInstance.logoutConfirmed.subscribe(() => {
+    const sub = dialog.componentInstance.logoutConfirmed.subscribe(() => {
       this.isAuthenticated = false;
       this.userService.logout();
       this.userService.profileOpened.next(true);
       this.router.navigate(['/login']);
     });
+
+    this.subscriptions.push(sub);
   }
 
   viewUser(): void {
     debugger
     // this.router.navigate(['/user']);
     this.userService.profileOpened.next(true);
-    this.userService.getCurrentUserByUsername().subscribe((user: User) => {
+    const userSub = this.userService.getCurrentUserByUsername().subscribe((user: User) => {
       this.profileImageUrl = user.image;
     });
+
+    this.subscriptions.push(userSub);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdvertisementView } from '../../interfaces/advertisement.view';
 import { User } from '../../interfaces/user';
@@ -11,18 +11,20 @@ import { FormComponent } from '../form/form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-myAdvretisements',
   templateUrl: './myAdvretisements.component.html',
   styleUrls: ['./myAdvretisements.component.css']
 })
-export class MyAdvertisementsComponent implements OnInit {
+export class MyAdvertisementsComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<AdvertisementView> = new MatTableDataSource();
   displayedColumns: string[] = ['makeName', 'modelName', 'fuelType', 'color', 'power', 'yearOfManufacture', 'price', 'actions'];
   user: User | undefined;
   message: string = '';
   countRecords: number = 0;
+  subscriptions: Subscription[] = [];
 
   constructor(private _dialog: MatDialog,
     private advertisementService: AdvertisementService,
@@ -40,11 +42,13 @@ export class MyAdvertisementsComponent implements OnInit {
 
   private refresh() {
     debugger
-    this.advertisementService.getAllAdvertisements()
+    const sub = this.advertisementService.getAllAdvertisements()
       .subscribe((advertisements) => {
         debugger
         this.dataSource = new MatTableDataSource(advertisements);
       });
+
+    this.subscriptions.push(sub);
   }
 
   applyFilter(event: Event) {
@@ -74,19 +78,23 @@ export class MyAdvertisementsComponent implements OnInit {
       data: { advertisementId: id }
     });
 
-    dialog.componentInstance.deleteConfirmed.subscribe(() => {
+    const sub = dialog.componentInstance.deleteConfirmed.subscribe(() => {
       this.deleteAdvertisement(id);
     });
+
+    this.subscriptions.push(sub);
   }
 
   deleteAdvertisement(id: number) {
-    this.advertisementService.deleteAdvertisement(id)
+    const sub = this.advertisementService.deleteAdvertisement(id)
       .subscribe(() => {
         this.openSnackBar('Advertisement deleted successfully', 'Close');
         this.refresh();
       }, (error) => {
         this.openSnackBar('Error deleting advertisement', 'Close');
       });
+
+    this.subscriptions.push(sub);
   }
 
   openSnackBar(message: string, action: string) {
@@ -98,13 +106,15 @@ export class MyAdvertisementsComponent implements OnInit {
   addAdvertisement(): void {
     const dialog = this._dialog.open(FormComponent, {});
 
-    dialog.componentInstance.addedAdvs.subscribe(() => {
+    const sub = dialog.componentInstance.addedAdvs.subscribe(() => {
       this.openSnackBar('Advertisement added successfully', 'Close');
       this.refresh();
       dialog.close();
     }, (error) => {
       this.openSnackBar('Error adding advertisement', 'Close');
     });
+
+    this.subscriptions.push(sub);
   }
 
   onEditAdvertisementHandler(advertisement: AdvertisementView) {
@@ -117,7 +127,7 @@ export class MyAdvertisementsComponent implements OnInit {
     });
     debugger
 
-    dialog.componentInstance.updateConfirmed.subscribe(() => {
+    const sub = dialog.componentInstance.updateConfirmed.subscribe(() => {
       debugger
       this.openSnackBar('Advertisement updated successfully', 'Close');
       this.refresh();
@@ -126,29 +136,40 @@ export class MyAdvertisementsComponent implements OnInit {
       debugger
       this.openSnackBar('Error updating advertisement', 'Close');
     });
+
+    this.subscriptions.push(sub);
   }
 
   private loadUserAndRefresh() {
     debugger
     const username = this.userService.getCurrentUserName() as string;
 
-    this.advertisementService.getAllMyAdvertisementsWithPagination(username, 0, 5).subscribe({
+    const sub = this.advertisementService.getAllMyAdvertisementsWithPagination(username, 0, 5).subscribe({
       next: (advertisementView) => {
         debugger
         this.dataSource = new MatTableDataSource(advertisementView.advertisements);
         this.countRecords = advertisementView.countRecords;
       }
     });
+
+    this.subscriptions.push(sub);
   }
 
   onPageChange(event: any) {
     const username = this.userService.getCurrentUserName() as string;
 
     debugger
-    this.advertisementService.getAllMyAdvertisementsWithPagination(username, event.pageIndex, event.pageSize)
+    const sub = this.advertisementService.getAllMyAdvertisementsWithPagination(username, event.pageIndex, event.pageSize)
       .subscribe((advertisements) => {
         this.dataSource = new MatTableDataSource(advertisements.advertisements);
       });
+
+    this.subscriptions.push(sub);
+  }
+
+  ngOnDestroy() {
+    debugger
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }
 

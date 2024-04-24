@@ -13,6 +13,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Model } from '../../interfaces/model';
 import { ModelService } from 'src/app/services/model.service';
 import { MatSelectChange } from '@angular/material/select';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -28,6 +29,7 @@ export class FormComponent implements OnInit, OnDestroy {
   models: Model[] = [];
   fuelTypes: FuelTypeDto[] = [];
   sellerId: number = 0;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private advertisementService: AdvertisementService,
@@ -55,31 +57,35 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     debugger
-    this.makeService.getAllMakes()
+    const makesSub = this.makeService.getAllMakes()
       .subscribe((makes) => {
         debugger
         this.makes = makes;
       });
 
     debugger
-    this.fuelTypeService.getAllFuelTypes()
+    const fuelTypesSub = this.fuelTypeService.getAllFuelTypes()
       .subscribe((fuelTypes) => {
         debugger
         this.fuelTypes = fuelTypes;
       });
 
     debugger
-    this.userService.getCurrentUserByUsername().subscribe((user) => {
+    const userSub = this.userService.getCurrentUserByUsername().subscribe((user) => {
       this.sellerId = user.id
     });
+
+    this.subscriptions.push(makesSub, fuelTypesSub, userSub);
   }
 
   submitForm() {
     debugger
-    this.advertisementService.addAdvertisement(this.sellerId, this.formData)
+    const advSub = this.advertisementService.addAdvertisement(this.sellerId, this.formData)
       .subscribe(() => {
         this.addedAdvs.emit();
       });
+
+    this.subscriptions.push(advSub);
   }
 
   openSnackBar(message: string, action: string) {
@@ -89,7 +95,8 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userService.tokenChanged.unsubscribe();
+    debugger
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   onMakeSelectionChange(event: MatSelectChange) {
@@ -97,16 +104,18 @@ export class FormComponent implements OnInit, OnDestroy {
     const selectedMake = event.value;
 
     if (typeof selectedMake === 'number') {
-      this.modelService.getAllModelsByMakeId(selectedMake).subscribe((models) => {
+      const modelsSub = this.modelService.getAllModelsByMakeId(selectedMake).subscribe((models) => {
         debugger
         this.models = models;
       });
+      this.subscriptions.push(modelsSub);
     }
     else {
-      this.modelService.getAllModelsByMakeName(selectedMake).subscribe((models) => {
+      const modelsSub = this.modelService.getAllModelsByMakeName(selectedMake).subscribe((models) => {
         debugger
         this.models = models;
       });
+      this.subscriptions.push(modelsSub);
     }
   }
 

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -10,8 +11,9 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup = new FormGroup({});
+  subscriptions: Subscription[] = [];
 
   constructor(private userService: UserService, private router: Router, private cookie: CookieService, private route: ActivatedRoute) { }
 
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.userService.login(this.loginForm.value)
+    const sub = this.userService.login(this.loginForm.value)
       .subscribe((token) => {
         debugger
 
@@ -45,5 +47,12 @@ export class LoginComponent implements OnInit {
         this.loginForm.reset();
         this.router.navigate(["/home"])
       });
+
+    this.subscriptions.push(sub);
+  }
+
+  ngOnDestroy(): void {
+    debugger
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

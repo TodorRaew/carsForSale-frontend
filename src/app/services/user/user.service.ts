@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { User } from 'src/app/shared/interfaces/user';
-import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -11,13 +11,15 @@ import { UserOutView } from 'src/app/shared/interfaces/userOutView';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnDestroy {
   URL = 'http://localhost:8080';
   resourceUrl = `api/v1/auth`
   tokenChanged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   profileOpened: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   user: User | undefined;
+
+  subscribtions: Subscription[] = [];
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
@@ -28,7 +30,7 @@ export class UserService {
     }
 
     const { email, username, password, phoneNumber, city } = form.value;
-    this.http
+    const sub = this.http
       .post<User>(`${this.URL}/${this.resourceUrl}/register`, {
         email,
         username,
@@ -39,6 +41,8 @@ export class UserService {
       .subscribe(() => {
 
       });
+
+    this.subscribtions.push(sub);
   }
 
   login(form: UserOutView): Observable<UserOutView> {
@@ -54,7 +58,7 @@ export class UserService {
   }
 
   getUserByEmail(form: FormGroup) {
-    this.http.get<User>(`${this.URL}/user/byEmail`, {
+    const sub = this.http.get<User>(`${this.URL}/user/byEmail`, {
       headers: { Authorization: this.cookie.get('Authorization') },
       params: {
         email: form.value.email
@@ -70,6 +74,8 @@ export class UserService {
           console.log('Invalid email or password');
         }
       });
+
+    this.subscribtions.push(sub);
   }
 
   getCurrentUserName() {
@@ -139,8 +145,8 @@ export class UserService {
 
   updateUser(username: string, imageUrl: string): void {
     debugger
-    
-    this.http.put(`${this.URL}/user/profileImage`, {}, {
+
+    const sub = this.http.put(`${this.URL}/user/profileImage`, {}, {
       params: {
         username: username,
         imageUrl: imageUrl
@@ -152,5 +158,12 @@ export class UserService {
       debugger
       // Логика при грешка
     });
-}
+
+    this.subscribtions.push(sub);
+  }
+
+  ngOnDestroy() {
+    debugger
+    this.subscribtions.forEach((sub) => sub.unsubscribe());
+  }
 }
