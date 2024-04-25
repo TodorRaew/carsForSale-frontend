@@ -88,10 +88,10 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
   deleteAdvertisement(id: number) {
     const sub = this.advertisementService.deleteAdvertisement(id)
       .subscribe(() => {
-        this.openSnackBar('Advertisement deleted successfully', 'Close');
+        this.openSnackBar('Обявата е изтрита успешно', 'Затвори');
         this.refresh();
       }, (error) => {
-        this.openSnackBar('Error deleting advertisement', 'Close');
+        this.openSnackBar('Грешка при изтриване на обявата', 'Затвори');
       });
 
     this.subscriptions.push(sub);
@@ -107,11 +107,11 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
     const dialog = this._dialog.open(FormComponent, {});
 
     const sub = dialog.componentInstance.addedAdvs.subscribe(() => {
-      this.openSnackBar('Advertisement added successfully', 'Close');
+      this.openSnackBar('Обявата е добавена успешно', 'Затвори');
       this.refresh();
       dialog.close();
     }, (error) => {
-      this.openSnackBar('Error adding advertisement', 'Close');
+      this.openSnackBar('Грешка при добавяне на обявата', 'Затвори');
     });
 
     this.subscriptions.push(sub);
@@ -129,12 +129,12 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
 
     const sub = dialog.componentInstance.updateConfirmed.subscribe(() => {
       debugger
-      this.openSnackBar('Advertisement updated successfully', 'Close');
+      this.openSnackBar('Обявата е редактирана успешно', 'Затвори');
       this.refresh();
       dialog.close();
     }, (error) => {
       debugger
-      this.openSnackBar('Error updating advertisement', 'Close');
+      this.openSnackBar('Грешка при редактиране на обявата', 'Затвори');
     });
 
     this.subscriptions.push(sub);

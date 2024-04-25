@@ -30,7 +30,7 @@ export class RegisterComponent {
     const form = this.registerForm;
 
     if (form.value.password !== form.value.repassword) {
-      this.openSnackBar("Passwords do not match!", "Close");
+      this.openSnackBar("Паролите не съвпадат!", "Затвори");
       return;
     }
     this.userService.register(form);
