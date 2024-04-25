@@ -4,9 +4,10 @@
     </div>
 </div>
 <form [formGroup]="viewUserFormGroup" class="bg-white shadow-md rounded px-5 pt-6 pb-8 mb-4">
-    <div class="px-5 text-[#9B9B9B] cursor-not-allowed flex justify-center items-center">
-        <!-- <label>Профилна снимка</label> -->
-        <img [src]="user?.image" alt="img" class="w-64 h-64 rounded-full">
+    <div class="w-full  flex justify-center items-center">
+        <div class="px-5 text-[#9B9B9B] cursor-not-allowed">
+            <img [src]="user?.image" alt="img" class="w-64 h-64 rounded-full">
+        </div>
     </div>
     <div class="grid grid-cols-2 gap-2">
         <mat-form-field class="p-1">
