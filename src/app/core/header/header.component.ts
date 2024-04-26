@@ -23,11 +23,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    const userSub = this.userService.getCurrentUserByUsername().subscribe((user: User) => {
+    const userSub = this.userService.getUser().subscribe((user: User | undefined) => {
       this.user = user;
     });
 
     const tokenSub = this.userService.tokenChanged.subscribe((response) => {
+      debugger
       this.isAuthenticated = response
     });
 

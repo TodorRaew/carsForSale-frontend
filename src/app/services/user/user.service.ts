@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { User } from 'src/app/shared/interfaces/user';
-import { BehaviorSubject, Observable, Subscription, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, lastValueFrom, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -18,6 +18,8 @@ export class UserService implements OnDestroy {
   profileOpened: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   user: User | undefined;
+
+  currentUser: BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
 
   subscribtions: Subscription[] = [];
 
@@ -49,6 +51,14 @@ export class UserService implements OnDestroy {
     debugger
     return this.http
       .post<{ token: string, username: string, role: string }>(`${this.URL}/${this.resourceUrl}/login`, form);
+  }
+
+  setUser(user: User) {
+    this.currentUser.next(user);
+  }
+
+  getUser(): Observable<User | undefined>{
+    return this.currentUser.asObservable();
   }
 
   logout() {

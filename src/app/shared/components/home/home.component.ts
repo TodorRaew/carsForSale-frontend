@@ -52,8 +52,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
     this.message = this.activatedRoute.snapshot.data['title'];
     debugger
-    this.refresh();
     this.loadUser();
+    this.refresh();
   }
 
   private refresh() {
@@ -164,6 +164,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const userSub = this.userService.getCurrentUserByUsername().subscribe((user) => {
       debugger
       this.user = user;
+      this.userService.setUser(user);
     });
 
     this.subscriptions.push(userSub);
