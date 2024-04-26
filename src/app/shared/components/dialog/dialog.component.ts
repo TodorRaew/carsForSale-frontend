@@ -10,7 +10,6 @@ import { FuelTypeDto } from '../../interfaces/fuelTypeDto';
 import { MakeService } from 'src/app/services/make.service';
 import { FuelTypeService } from 'src/app/services/fuel-type.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { image } from '@cloudinary/url-gen/qualifiers/source';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSelectChange } from '@angular/material/select';
 import { ModelService } from 'src/app/services/model.service';
@@ -53,7 +52,6 @@ export class DioalogComponent implements OnInit, OnDestroy {
   constructor(public dialogRef: MatDialogRef<DioalogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private advertisementService: AdvertisementService,
-    private userService: UserService,
     private makeService: MakeService,
     private fuelTypeService: FuelTypeService,
     private _snackBar: MatSnackBar,

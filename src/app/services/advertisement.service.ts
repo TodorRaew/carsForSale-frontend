@@ -24,7 +24,7 @@ export class AdvertisementService {
     //   return;
     // }
     const userId = Number(sellerId);
-    const phoneNumber = form.value.phoneNumber;
+    const sellerPhoneNumber = form.value.phoneNumber;
     const makeId = Number(form.value.makeId);
     const modelId = Number(form.value.modelId);
     const fuelTypeId = Number(form.value.fuelTypeId);
@@ -39,7 +39,7 @@ export class AdvertisementService {
     return this.http
       .post<Advertisement>(`${this.URL}/${this.resourceUrl}/advertisement`, {
         userId,
-        phoneNumber,
+        sellerPhoneNumber,
         makeId,
         modelId,
         fuelTypeId,
@@ -55,7 +55,7 @@ export class AdvertisementService {
   updateAdvertisement(_makeId: number | undefined, _modelId: number | undefined, _fuelTypeId: number | undefined, sellerId: number, _id: number, _form: FormGroup): Observable<Advertisement> {
     debugger
     const userId = Number(sellerId);
-    const phoneNumber = _form.value.phone;
+    const sellerPhoneNumber = _form.value.phone;
     const makeId = Number(_makeId);
     const modelId = Number(_modelId);
     const fuelTypeId = Number(_fuelTypeId);
@@ -70,7 +70,7 @@ export class AdvertisementService {
     return this.http
       .put<Advertisement>(`${this.URL}/${this.resourceUrl}/${_id}`, {
         userId,
-        phoneNumber,
+        sellerPhoneNumber,
         makeId,
         modelId,
         fuelTypeId,
